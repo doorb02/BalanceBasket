@@ -1,6 +1,7 @@
 package com.example.group21.balancebasket;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -159,5 +160,10 @@ public class Welcome_Screen extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void Start_Home_Activity(View view) {
+        Intent intent = new Intent(this, Accelerometer.class);
+        startActivity(intent);
     }
 }
