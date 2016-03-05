@@ -3,6 +3,7 @@ package com.example.group21.balancebasket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.Button;
@@ -21,6 +22,11 @@ import ioio.lib.util.android.IOIOActivity;
 
 public class Bluetooth extends IOIOActivity {
     private Button button_;
+    // Constants that indicate the current connection state
+    public static final int STATE_NONE = 0; // we're doing nothing
+    public static final int STATE_CONNECTING = 1; // now initiating an outgoing connection
+    public static final int STATE_CONNECTED = 2; // now connected to a remote device
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,22 +109,23 @@ public class Bluetooth extends IOIOActivity {
 
     private void enableUi(final boolean enable) {
        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (enable) {
-                    if (numConnected_++ == 0) {
-                        button_.setEnabled(true);
-                    }
-                } else {
-                    if (--numConnected_ == 0) {
-                        button_.setEnabled(false);
-                    }
-                }
-            }
-        });
+           @Override
+           public void run() {
+               if (enable) {
+                   if (numConnected_++ == 0) {
+                       button_.setEnabled(true);
+                   }
+               } else {
+                   if (--numConnected_ == 0) {
+                       button_.setEnabled(false);
+                   }
+               }
+           }
+       });
     }
     public void Start_Home_Activity(View view) {
         Intent intent = new Intent(this, Accelerometer.class);
         startActivity(intent);
     }
+
 }
