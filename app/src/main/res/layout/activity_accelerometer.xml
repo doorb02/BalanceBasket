@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="x:"
-        android:id="@+id/textView2"
+        android:text="pitch(x):"
+        android:id="@+id/textViewX"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="39dp" />
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/x_as"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_alignTop="@+id/textViewX"
+        android:layout_toEndOf="@+id/textViewX" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,34 +34,25 @@
         android:id="@+id/y_as"
         android:layout_marginTop="103dp"
         android:layout_below="@+id/x_as"
-        android:layout_toEndOf="@+id/textView5" />
+        android:layout_toEndOf="@+id/textViewY" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="y:"
-        android:id="@+id/textView5"
+        android:text="roll(y):"
+        android:id="@+id/textViewY"
         android:layout_alignTop="@+id/y_as"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/z_as"
+        android:text="@string/activate_Button"
+        android:id="@+id/activate_button"
         android:layout_below="@+id/y_as"
-        android:layout_alignStart="@+id/y_as"
-        android:layout_marginTop="71dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="z:"
-        android:id="@+id/textView7"
-        android:layout_alignTop="@+id/z_as"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="119dp" />
 
 </RelativeLayout>
 
