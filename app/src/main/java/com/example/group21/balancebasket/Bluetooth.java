@@ -1,7 +1,9 @@
 package com.example.group21.balancebasket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import android.widget.Button;
 
@@ -24,7 +26,7 @@ public class Bluetooth extends IOIOActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
-        button_ = (Button) findViewById(R.id.button);
+        button_ = (Button) findViewById(R.id.continue_button);
     }
 
     class Looper extends BaseIOIOLooper {
@@ -37,12 +39,12 @@ public class Bluetooth extends IOIOActivity {
         @Override
         protected void setup() throws ConnectionLostException {
             showVersions(ioio_, "IOIO connected!");
-            led_.write(true);
             led_ = ioio_.openDigitalOutput(0, true);
             enableUi(true);
             uart_=ioio_.openUart(5,6,9600, Uart.Parity.NONE, Uart.StopBits.ONE);
             out_=uart_.getOutputStream();
             in_=uart_.getInputStream();
+
         }
 
         @Override
@@ -61,11 +63,6 @@ public class Bluetooth extends IOIOActivity {
         public void disconnected() {
             enableUi(false);
             toast("IOIO disconnected");
-            try {
-                led_.write(false);
-            } catch (ConnectionLostException e) {
-                e.printStackTrace();
-            }
         }
 
         @Override
@@ -119,5 +116,9 @@ public class Bluetooth extends IOIOActivity {
                 }
             }
         });
+    }
+    public void Start_Home_Activity(View view) {
+        Intent intent = new Intent(this, Accelerometer.class);
+        startActivity(intent);
     }
 }

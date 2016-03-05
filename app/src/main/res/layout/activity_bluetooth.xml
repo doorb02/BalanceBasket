@@ -12,8 +12,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue"
-        android:id="@+id/button"
+        android:text="@string/continue_button"
+        android:id="@+id/continue_button"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="Start_Home_Activity"/>
 </RelativeLayout>
