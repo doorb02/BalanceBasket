@@ -11,8 +11,6 @@ public class Accelerometer extends AppCompatActivity {
     public TextView Zas;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +19,6 @@ public class Accelerometer extends AppCompatActivity {
         Xas = (TextView) findViewById(R.id.x_as);
         Yas = (TextView) findViewById(R.id.y_as);
         Zas = (TextView) findViewById(R.id.z_as);
-
-
     }
 }
 
