@@ -162,8 +162,8 @@ public class Welcome_Screen extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void Start_Bluetooth_Activity(View view) {
-        Intent intent = new Intent(this, Bluetooth.class);
+    public void Start_Accelerometer_Activity(View view) {
+        Intent intent = new Intent(this, Accelerometer.class);
         startActivity(intent);
     }
 }

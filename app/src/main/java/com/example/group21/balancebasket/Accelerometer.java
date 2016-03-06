@@ -2,35 +2,40 @@ package com.example.group21.balancebasket;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.net.Uri;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 public class Accelerometer extends AppCompatActivity {
-    private static Bluetooth mChatService;
-    private static Activity activity;
-    public TextView Xas;
-    public TextView Yas;
+    private static final String TAG = "Accelerometer";
+    public static final boolean D = BuildConfig.DEBUG; // This is automatically set when building
+
+    public static Activity activity;
+    public static Context context;
+
+    private static Bluetooth mChatService = null;
+    private static boolean joystickReleased = true;
     private Button mButton;
     public TextView mPitchView;
     public TextView mRollView;
-    public TextView mCoefficient;
-    private TableRow mTableRow;
+    public TableRow mTableRow;
+
+    public final static String sendStop = "CS;";
+    public final static String sendIMUValues = "CM,";
+
+    // Local Bluetooth adapter
+    private BluetoothAdapter mBluetoothAdapter = null;
 
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
@@ -38,32 +43,34 @@ public class Accelerometer extends AppCompatActivity {
     private static boolean buttonState;
 
     private static SensorFusion mSensorFusion = null;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
+    // Message types sent from the BluetoothChatService Handler
+    public static final int MESSAGE_STATE_CHANGE = 1;
+    public static final int MESSAGE_READ = 2;
+    public static final int MESSAGE_DEVICE_NAME = 3;
+    public static final int MESSAGE_DISCONNECTED = 4;
+    public static final int MESSAGE_RETRY = 5;
+
+    // Key names received from the BluetoothChatService Handler
+    public static final String DEVICE_NAME = "device_name";
+    public static final String TOAST = "toast";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
+        context = getApplicationContext();
         setContentView(R.layout.activity_accelerometer);
 
-        Xas = (TextView) findViewById(R.id.x_as);
-        Yas = (TextView) findViewById(R.id.y_as);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
+        startService(new Intent(this, Bluetooth.class));
 
-    //        @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_accelerometer, container, false);
+        // get sensorManager and initialize sensor listeners
+        SensorManager mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensorFusion = new SensorFusion(getApplicationContext(), mSensorManager);
 
-        mPitchView = (TextView) v.findViewById(R.id.textViewX);
-        mRollView = (TextView) v.findViewById(R.id.textViewY);
-        mButton = (Button) v.findViewById(R.id.activate_button);
+        mPitchView = (TextView) findViewById(R.id.textView1);
+        mRollView = (TextView) findViewById(R.id.textView2);
+        mButton = (Button) findViewById(R.id.activate_button);
 
         mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
             @Override
@@ -77,22 +84,42 @@ public class Accelerometer extends AppCompatActivity {
 
         Accelerometer.buttonState = false;
 
-        return v;
+        mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
+            @Override
+            public void run() {
+                if (SensorFusion.IMUOutputSelection == -1)
+                    mHandler.postDelayed(this, 100); // Run this again if it hasn't initialized the sensors yet
+                else if (SensorFusion.IMUOutputSelection != 2) // Check if a gyro is supported
+                    mTableRow.setVisibility(View.GONE); // If not then hide the tablerow
+            }
+        }, 100); // Wait 100ms before running the code
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(mRunnable);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mSensorFusion.initListeners();
 
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                mHandler.postDelayed(this, 50); // Update IMU data every 50ms
+                mHandler.postDelayed(this, 200); // Update IMU data every 50ms
                 if (Accelerometer.mSensorFusion == null)
                     return;
                 mPitchView.setText(Accelerometer.mSensorFusion.pitch);
                 mRollView.setText(Accelerometer.mSensorFusion.roll);
-                mCoefficient.setText(Accelerometer.mSensorFusion.coefficient);
 
                 counter++;
                 if (counter > 2) { // Only send data every 150ms time
@@ -101,34 +128,22 @@ public class Accelerometer extends AppCompatActivity {
                         return;
                     if (Accelerometer.mChatService.getState() == Bluetooth.STATE_CONNECTED) { //&& Accelerometer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT) {
                         buttonState = mButton.isPressed();
-//                            Accelerometer.buttonState = buttonState;
 
-//                            if (Accelerometer.joystickReleased || getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) // Check if joystick is released or we are not in landscape mode
-//                                CustomViewPager.setPagingEnabled(!buttonState); // Set the ViewPager according to the button
-//                            else
-//                                CustomViewPager.setPagingEnabled(false);
-//
-//                            if (Accelerometer.joystickReleased) {
-//                                if (buttonState) {
-//                                    lockRotation();
-//                                    Accelerometer.mChatService.write(Accelerometer.sendIMUValues + Accelerometer.mSensorFusion.pitch + ',' + Accelerometer.mSensorFusion.roll + ";");
-//                                    mButton.setText(R.string.sendingData);
-//                                } else {
-//                                    unlockRotation();
-//                                    Accelerometer.mChatService.write(Accelerometer.sendStop);
-//                                    mButton.setText(R.string.notSendingData);
-//                                }
-//                            }
-//                        } else {
-//                            mButton.setText(R.string.activate_Button);
-//                            if (Accelerometer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT && Accelerometer.joystickReleased)
-//                                CustomViewPager.setPagingEnabled(true);
-//                        }
-//                    }
+                        if (Accelerometer.joystickReleased) {
+                            if (buttonState) {
+                                lockRotation();
+                                Accelerometer.mChatService.write(Accelerometer.sendIMUValues + Accelerometer.mSensorFusion.pitch + ',' + Accelerometer.mSensorFusion.roll + ";");
+                            } else {
+                                unlockRotation();
+                                Accelerometer.mChatService.write(Accelerometer.sendStop);
+                            }
+                        }
+                    } else {
+                        mButton.setText(R.string.activate_Button);
                     }
                 }
-                ;
-                mHandler.postDelayed(mRunnable, 50); // Update IMU data every 50ms
+
+                mHandler.postDelayed(mRunnable, 200); // Update IMU data every 50ms
             }
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -154,7 +169,7 @@ public class Accelerometer extends AppCompatActivity {
             }
 
             public int getRotation() {
-                return activity.getWindowManager().getDefaultDisplay().getRotation();
+                return this.getRotation();
             }
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -168,5 +183,6 @@ public class Accelerometer extends AppCompatActivity {
             }
 
         };
-  }
+        mRunnable.run();
+    }
 }

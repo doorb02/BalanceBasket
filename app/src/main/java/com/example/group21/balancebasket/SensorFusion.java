@@ -1,11 +1,30 @@
-/**
- * Created by Corné on 4-3-2016.
- */
+/************************************************************************************
+ * Copyright (c) 2012 Paul Lawitzki
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
+ ************************************************************************************/
+
+// Source: http://www.thousand-thoughts.com/2012/03/android-sensor-fusion-tutorial/
 
 package com.example.group21.balancebasket;
 
-
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -22,16 +41,14 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class SensorFusion implements SensorEventListener {
     // For debugging
-    //private static final String TAG = "SensorFusion";
-    //public static final boolean D = BalanduinoActivity.D;
+    private static final String TAG = "SensorFusion";
+    public static final boolean D = Accelerometer.D;
 
     // Stores information about all the different sensors
     private SensorManager mSensorManager = null;
     private Context context;
-
 
     // angular speeds from gyro
     private float[] gyro = new float[3];
@@ -89,7 +106,7 @@ public class SensorFusion implements SensorEventListener {
         gyroMatrix[7] = 0.0f;
         gyroMatrix[8] = 1.0f;
 
-       //TODO: initListeners();
+        initListeners();
 
         // Wait for one second until gyroscope and magnetometer/accelerometer
         // Data is initialized then schedule the complementary filter task
@@ -101,7 +118,6 @@ public class SensorFusion implements SensorEventListener {
         d.setMinimumFractionDigits(3);
     }
 
-    /*
     // This function registers sensor listeners for the accelerometer, magnetometer and gyroscope.
     public void initListeners() {
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null)
@@ -125,8 +141,6 @@ public class SensorFusion implements SensorEventListener {
                 Log.i(TAG, "Magnetic Field sensor not supported");
         }
     }
-
-    */
 
     public void unregisterListeners() {
         mSensorManager.unregisterListener(this);
@@ -372,14 +386,27 @@ public class SensorFusion implements SensorEventListener {
                 break;
         }
 
-
+        if (context.getResources().getBoolean(R.bool.isTablet)) {
+//            int rotation = Accelerometer.getRotation();
+//            if (rotation == Surface.ROTATION_90) { // Landscape
+//                float pitchTemp = pitchOut;
+//                pitchOut = rollOut;
+//                rollOut = -pitchTemp;
+//            } else if (rotation == Surface.ROTATION_180) { // Reverse Portrait
+//                pitchOut = -pitchOut;
+//                rollOut = -rollOut;
+//            } else if (rotation == Surface.ROTATION_270) { // Reverse Landscape
+//                float pitchTemp = pitchOut;
+//                pitchOut = -rollOut;
+//                rollOut = pitchTemp;
+//            }
+            //else // We don't do anything in portrait mode
+        }
 
         pitch = d.format(pitchOut * 180 / Math.PI);
         roll = d.format(rollOut * 180 / Math.PI);
         coefficient = d.format(tempFilter_coefficient);
     }
-
-
 
     private Runnable updateOreintationDisplayTask = new Runnable() {
         @Override
