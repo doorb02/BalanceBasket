@@ -37,7 +37,7 @@ public class Accelerometer extends AppCompatActivity {
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
 
-    private Handler mHandler = new Handler();
+    private Handler mHandler;// = new Handler();
     private Runnable mRunnable;
     private int counter = 0;
     private static boolean buttonState;
@@ -71,7 +71,7 @@ public class Accelerometer extends AppCompatActivity {
         mPitchView = (TextView) findViewById(R.id.textView1);
         mRollView = (TextView) findViewById(R.id.textView2);
         mButton = (Button) findViewById(R.id.activate_button);
-
+        mHandler = new Handler();
         mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
             @Override
             public void run() {
@@ -111,8 +111,7 @@ public class Accelerometer extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         mSensorFusion.initListeners();
-
-        mRunnable = new Runnable() {
+        mHandler.post(new Runnable() {
             @Override
             public void run() {
                 mHandler.postDelayed(this, 200); // Update IMU data every 50ms
@@ -182,7 +181,6 @@ public class Accelerometer extends AppCompatActivity {
                 }
             }
 
-        };
-        mRunnable.run();
+        });
     }
 }
