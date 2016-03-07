@@ -73,4 +73,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="Menu">Menu</string>
+    <string name="Main">MAIN</string>
+    <string name="Hamburger">| Menu |</string>
+
 </resources>
