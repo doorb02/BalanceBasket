@@ -114,7 +114,7 @@ public class Accelerometer extends AppCompatActivity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mHandler.postDelayed(this, 200); // Update IMU data every 50ms
+                mHandler.postDelayed(this, 50); // Update IMU data every 50ms
                 if (Accelerometer.mSensorFusion == null)
                     return;
                 mPitchView.setText(Accelerometer.mSensorFusion.pitch);
@@ -142,7 +142,7 @@ public class Accelerometer extends AppCompatActivity {
                     }
                 }
 
-                mHandler.postDelayed(mRunnable, 200); // Update IMU data every 50ms
+                mHandler.postDelayed(mRunnable, 50); // Update IMU data every 50ms
             }
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
