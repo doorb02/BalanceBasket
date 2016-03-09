@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    android:background="#ffffff"
-    android:baselineAligned="true">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Hamburger"
-        android:id="@+id/button"
-        android:gravity="center_vertical"
-        android:textColor="#ffffff"
-        android:background="#4052b5"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:onClick="Open_Drawer"/>
+   <android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    />
 
-</LinearLayout>
+<!-- <Button
+
+style="?android:attr/buttonStyleSmall"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="@string/Hamburger"
+android:id="@+id/button"
+android:gravity="center_vertical"
+android:textColor="#ffffff"
+android:background="#4052b5"
+android:textSize="24sp"
+android:textStyle="bold"
+android:onClick="Open_Drawer"/>
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:id="@+id/title_text"
+android:layout_centerInParent="true"
+android:textAllCaps="true"/>
+
+    />
+
+    -->
