@@ -121,7 +121,7 @@ public class Accelerometer extends AppCompatActivity {
                 mRollView.setText(Accelerometer.mSensorFusion.roll);
 
                 counter++;
-                if (counter > 2) { // Only send data every 150ms time
+                if (counter > 2) {
                     counter = 0;
                     if (Accelerometer.mChatService == null)
                         return;

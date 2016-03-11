@@ -159,7 +159,4 @@ public class Bluetooth extends IOIOService {
     public void write(String string) {
         write(string.getBytes());
     }
-
-
-
 }
