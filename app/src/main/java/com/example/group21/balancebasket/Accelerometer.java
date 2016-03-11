@@ -42,7 +42,9 @@ private Toolbar toolbar;
             //set the fragment initially
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {//set the fragment initially
-
+            Intent random;
+            random = new Intent(this,RandomActivity.class);
+            startActivity(random);
 
         } else if (id == R.id.nav_slideshow) {
 
