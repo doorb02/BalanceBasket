@@ -1,102 +1,186 @@
 package com.example.group21.balancebasket;
 
-import android.app.ActionBar;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.content.pm.ActivityInfo;
+import android.hardware.SensorManager;
+import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Accelerometer extends AppCompatActivity {
+    private static final String TAG = "Accelerometer";
+    public static final boolean D = BuildConfig.DEBUG; // This is automatically set when building
 
-private Toolbar toolbar;
+    public static Activity activity;
+    public static Context context;
+
+    private static Bluetooth mChatService = null;
+    private static boolean joystickReleased = true;
+    private Button mButton;
+    public TextView mPitchView;
+    public TextView mRollView;
+    public TableRow mTableRow;
+
+    public final static String sendStop = "CS;";
+    public final static String sendIMUValues = "CM,";
+
+    // Local Bluetooth adapter
+    private BluetoothAdapter mBluetoothAdapter = null;
+
+    private Handler mHandler;// = new Handler();
+    private Runnable mRunnable;
+    private int counter = 0;
+    private static boolean buttonState;
+
+    private static SensorFusion mSensorFusion = null;
+
+    // Message types sent from the BluetoothChatService Handler
+    public static final int MESSAGE_STATE_CHANGE = 1;
+    public static final int MESSAGE_READ = 2;
+    public static final int MESSAGE_DEVICE_NAME = 3;
+    public static final int MESSAGE_DISCONNECTED = 4;
+    public static final int MESSAGE_RETRY = 5;
+
+    // Key names received from the BluetoothChatService Handler
+    public static final String DEVICE_NAME = "device_name";
+    public static final String TOAST = "toast";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
+        context = getApplicationContext();
         setContentView(R.layout.activity_accelerometer);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-            getMenuInflater().inflate(R.menu.menu_main, menu);
-            return true;
-        }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        startService(new Intent(this, Bluetooth.class));
 
-        if (id == R.id.nav_camera) {
-            Intent accelerometer;
-            accelerometer = new Intent(this,Accelerometer.class);
-            startActivity(accelerometer);
-            //set the fragment initially
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {//set the fragment initially
-            Intent random;
-            random = new Intent(this,RandomActivity.class);
-            startActivity(random);
+        // get sensorManager and initialize sensor listeners
+        SensorManager mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensorFusion = new SensorFusion(getApplicationContext(), mSensorManager);
 
-        } else if (id == R.id.nav_slideshow) {
+        mPitchView = (TextView) findViewById(R.id.textView1);
+        mRollView = (TextView) findViewById(R.id.textView2);
+        mButton = (Button) findViewById(R.id.activate_button);
+        mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
+            @Override
+            public void run() {
+                if (SensorFusion.IMUOutputSelection == -1)
+                    mHandler.postDelayed(this, 100); // Run this again if it hasn't initialized the sensors yet
+                else if (SensorFusion.IMUOutputSelection != 2) // Check if a gyro is supported
+                    mTableRow.setVisibility(View.GONE); // If not then hide the tablerow
+            }
+        }, 100); // Wait 100ms before running the code
 
-            Intent settings;
-            settings = new Intent(this, Settings.class);
-            startActivity(settings);
+        Accelerometer.buttonState = false;
 
-
-        } else if (id == R.id.nav_manage) {
-            Intent accelerometer;
-            accelerometer = new Intent(this,Accelerometer.class);
-            startActivity(accelerometer);
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-        return super.onOptionsItemSelected(item);
+        mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
+            @Override
+            public void run() {
+                if (SensorFusion.IMUOutputSelection == -1)
+                    mHandler.postDelayed(this, 100); // Run this again if it hasn't initialized the sensors yet
+                else if (SensorFusion.IMUOutputSelection != 2) // Check if a gyro is supported
+                    mTableRow.setVisibility(View.GONE); // If not then hide the tablerow
+            }
+        }, 100); // Wait 100ms before running the code
 
     }
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(mRunnable);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
-        //ActionBar Hamburger = getActionBar();
-        //assert Hamburger != null;
-        //Hamburger.setDisplayShowHomeEnabled(false);
-        //Hamburger.setDisplayShowTitleEnabled(false);
-        //LayoutInflater mInflater = LayoutInflater.from(this);
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorFusion.initListeners();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mHandler.postDelayed(this, 50); // Update IMU data every 50ms
+                if (Accelerometer.mSensorFusion == null)
+                    return;
+                mPitchView.setText(Accelerometer.mSensorFusion.pitch);
+                mRollView.setText(Accelerometer.mSensorFusion.roll);
 
-//        View mCustomView = mInflater.inflate(R.layout.header, null);
-  //      TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
-    //    mTitleTextView.setText("Accelerometer");
-      //  Button btn = (Button)findViewById(R.id.button);
-        //btn.setOnClickListener(new View.OnClickListener() {
+                counter++;
+                if (counter > 2) {
+                    counter = 0;
+                    if (Accelerometer.mChatService == null)
+                        return;
+                    if (Accelerometer.mChatService.getState() == Bluetooth.STATE_CONNECTED) { //&& Accelerometer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT) {
+                        buttonState = mButton.isPressed();
 
+                        if (Accelerometer.joystickReleased) {
+                            if (buttonState) {
+                                lockRotation();
+                                Accelerometer.mChatService.write(Accelerometer.sendIMUValues + Accelerometer.mSensorFusion.pitch + ',' + Accelerometer.mSensorFusion.roll + ";");
+                            } else {
+                                unlockRotation();
+                                Accelerometer.mChatService.write(Accelerometer.sendStop);
+                            }
+                        }
+                    } else {
+                        mButton.setText(R.string.activate_Button);
+                    }
+                }
 
-          //  @Override
-            //public void onClick(View v) {
-              //  Toast.makeText(getApplicationContext(), "Drawer should open", Toast.LENGTH_SHORT).show();
+                mHandler.postDelayed(mRunnable, 50); // Update IMU data every 50ms
+            }
 
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+            private void lockRotation() {
+                if (getResources().getBoolean(R.bool.isTablet)) { // Check if the layout can rotate
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED); // Lock screen orientation so it doesn't rotate
+                    else { // Lock rotation manually - source: http://blogs.captechconsulting.com/blog/eric-miles/programmatically-locking-android-screen-orientation
+                        int rotation = getRotation();
+                        int lock;
 
-     //       }
- //       });
+                        if (rotation == Surface.ROTATION_90) // Landscape
+                            lock = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                        else if (rotation == Surface.ROTATION_180) // Reverse Portrait
+                            lock = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+                        else if (rotation == Surface.ROTATION_270) // Reverse Landscape
+                            lock = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                        else
+                            lock = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                        setRequestedOrientation(lock);
+                    }
+                }
+            }
 
+            public int getRotation() {
+                return this.getRotation();
+            }
 
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+            private void unlockRotation() {
+                if (getResources().getBoolean(R.bool.isTablet)) { // Check if the layout can rotate
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER); // Unlock screen orientation
+                    else
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR); // Unlock screen orientation
+                }
+            }
 
-    public void Open_Drawer(View view) {
-
-        Intent drawer;
-            drawer = new Intent(this, Drawer.class);
-            startActivity(drawer);
+        });
     }
 }
