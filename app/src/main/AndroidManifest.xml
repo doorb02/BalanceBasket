@@ -35,7 +35,7 @@
             android:label="@string/title_activity_settings" />
         <activity android:name=".RandomActivity"></activity>
             <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
-        </intent-filter>
+
         <intent-filter>
             <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
         </intent-filter>
