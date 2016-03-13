@@ -3,12 +3,15 @@ package com.example.group21.balancebasket;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Surface;
@@ -24,7 +27,6 @@ public class Accelerometer extends AppCompatActivity {
     public static Activity activity;
     public static Context context;
 
-    private static Bluetooth mChatService = null;
     private static boolean joystickReleased = true;
     private Button mButton;
     public TextView mPitchView;
@@ -34,10 +36,9 @@ public class Accelerometer extends AppCompatActivity {
     public final static String sendStop = "CS;";
     public final static String sendIMUValues = "CM,";
 
-    // Local Bluetooth adapter
-    private BluetoothAdapter mBluetoothAdapter = null;
+    private static Bluetooth mChatService;
 
-    private Handler mHandler;// = new Handler();
+    private Handler mHandler;
     private Runnable mRunnable;
     private int counter = 0;
     private static boolean buttonState;
@@ -54,6 +55,20 @@ public class Accelerometer extends AppCompatActivity {
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
+
+    // setup connection with Bluetooth service
+    private ServiceConnection blueConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            Bluetooth.BlueBinder b = (Bluetooth.BlueBinder) binder;
+            mChatService = b.getBluetooth();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mChatService = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +108,13 @@ public class Accelerometer extends AppCompatActivity {
                     mTableRow.setVisibility(View.GONE); // If not then hide the tablerow
             }
         }, 100); // Wait 100ms before running the code
-
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mHandler.removeCallbacks(mRunnable);
+        unbindService(blueConnection);
     }
 
     @Override
@@ -110,6 +125,8 @@ public class Accelerometer extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
         mSensorFusion.initListeners();
         mHandler.post(new Runnable() {
             @Override
@@ -125,8 +142,8 @@ public class Accelerometer extends AppCompatActivity {
                     counter = 0;
                     if (Accelerometer.mChatService == null)
                         return;
-                    if (Accelerometer.mChatService.getState() == Bluetooth.STATE_CONNECTED) { //&& Accelerometer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT) {
-                        buttonState = mButton.isPressed();
+                    if (Accelerometer.mChatService.getState() == Bluetooth.STATE_CONNECTED) {
+                        buttonState = true;//mButton.isPressed(); TODO - recreate button state
 
                         if (Accelerometer.joystickReleased) {
                             if (buttonState) {
@@ -180,7 +197,6 @@ public class Accelerometer extends AppCompatActivity {
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR); // Unlock screen orientation
                 }
             }
-
         });
     }
 }

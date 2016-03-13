@@ -2,11 +2,13 @@ package com.example.group21.balancebasket;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import ioio.lib.api.DigitalOutput;
@@ -23,7 +25,9 @@ public class Bluetooth extends IOIOService {
     private static final boolean D = Accelerometer.D;
 
     private int mState;
-    private static byte[] coordinates;
+    private byte[] coordinates = new byte[1];
+
+    private final IBinder blueBinder =  new BlueBinder();
 
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0; // we're doing nothing
@@ -63,7 +67,15 @@ public class Bluetooth extends IOIOService {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        IBinder blueBinder = new BlueBinder();
+        return blueBinder;
+    }
+
+    public class BlueBinder extends Binder
+    {
+        Bluetooth getBluetooth() {
+            return Bluetooth.this;
+        }
     }
 
     /**
@@ -76,6 +88,9 @@ public class Bluetooth extends IOIOService {
     class Looper extends BaseIOIOLooper {
         /** The on-board LED. */
         private DigitalOutput led_;
+        Uart uart;
+        OutputStream out;
+        InputStream in;
 
         /**
          * Called every time a connection with IOIO has been established.
@@ -84,6 +99,11 @@ public class Bluetooth extends IOIOService {
          */
         @Override
         protected void setup() throws ConnectionLostException {
+            uart = ioio_.openUart(6,7, 9600, Uart.Parity.NONE, Uart.StopBits.ONE);
+            in = uart.getInputStream();
+            out = uart.getOutputStream();
+
+            mState = Bluetooth.STATE_CONNECTED;
             showVersions(ioio_, "IOIO connected!");
             led_ = ioio_.openDigitalOutput(0, true);
         }
@@ -98,11 +118,17 @@ public class Bluetooth extends IOIOService {
          */
         @Override
         public void loop() throws ConnectionLostException, InterruptedException {
+            try {
+              out.write(coordinates);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Thread.sleep(100);
         }
 
         @Override
         public void disconnected() {
+//            mState = Bluetooth.STATE_DISCONNECTED;
             toast("IOIO disconnected");
         }
 
@@ -135,6 +161,7 @@ public class Bluetooth extends IOIOService {
      * Return the current connection state.
      */
     public synchronized int getState() {
+
         return mState;
     }
 
@@ -148,7 +175,7 @@ public class Bluetooth extends IOIOService {
     }
 
     /**
-     * Write to the ConnectedThread in an unsynchronized manner
+     * Write
      *
      * @param out The bytes to write
      */
