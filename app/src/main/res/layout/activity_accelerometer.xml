@@ -9,67 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.group21.balancebasket.Accelerometer">
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:orientation="vertical"-->
-    <!--tools:context="com.example.group21.balancebasket.Accelerometer"-->
-    <!--android:weightSum="1"-->
-    <!--android:background="@color/black_overlay"-->
-    <!--android:baselineAligned="true">-->
-   <!--<include-->
-    <!--android:id="@+id/tool_bar"-->
-    <!--layout="@layout/tool_bar"/>-->
-
-       <!--<Button-->
-            <!--style="?android:attr/buttonStyleSmall"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/Hamburger"-->
-            <!--android:id="@+id/button"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:background="#32c20c"-->
-            <!--android:textSize="24sp"-->
-            <!--android:textStyle="bold"-->
-            <!--android:onClick="Open_Drawer"/>-->
-
-<!--</LinearLayout>-->
-
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-        <!--android:text="pitch(x):"-->
-        <!--android:id="@+id/textViewX"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_marginTop="39dp" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-        <!--android:id="@+id/x_as"-->
-        <!--android:layout_alignTop="@+id/textViewX"-->
-        <!--android:layout_toEndOf="@+id/textViewX" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-        <!--android:id="@+id/y_as"-->
-        <!--android:layout_marginTop="103dp"-->
-        <!--android:layout_below="@+id/x_as"-->
-        <!--android:layout_toEndOf="@+id/textViewY" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-        <!--android:text="roll(y):"-->
-        <!--android:id="@+id/textViewY"-->
-        <!--android:layout_alignTop="@+id/y_as"-->
-        <!--android:layout_alignParentStart="true" />-->
 
     <TableLayout
         android:id="@+id/table"
