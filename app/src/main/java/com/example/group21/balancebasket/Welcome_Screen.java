@@ -163,7 +163,7 @@ public class Welcome_Screen extends AppCompatActivity {
     }
 
     public void Start_Accelerometer_Activity(View view) {
-        Intent intent = new Intent(this, Accelerometer.class);
+        Intent intent = new Intent(this, Joystick.class);
         startActivity(intent);
     }
 }
