@@ -34,8 +34,6 @@ public class Bluetooth extends IOIOService {
     /*
         Default constructor
     */
-//    public Bluetooth(){
-//    }
 
     @Override
     public void onStart(Intent intent, int startId) {
@@ -78,25 +76,16 @@ public class Bluetooth extends IOIOService {
     class Looper extends BaseIOIOLooper {
         /** The on-board LED. */
         private DigitalOutput led_;
-        private Uart uart_;
-        private OutputStream out_;
 
         /**
          * Called every time a connection with IOIO has been established.
          * Typically used to open pins.
-         *
-         * @throws ConnectionLostException
-         *             When IOIO connection is lost.
-         *
          * @see ioio.lib.util.IOIOLooper#setup(IOIO)
          */
         @Override
         protected void setup() throws ConnectionLostException {
             showVersions(ioio_, "IOIO connected!");
             led_ = ioio_.openDigitalOutput(0, true);
-
-            uart_=ioio_.openUart(5,6,9600, Uart.Parity.NONE, Uart.StopBits.ONE);
-            out_=uart_.getOutputStream();
         }
 
         /**
@@ -109,12 +98,6 @@ public class Bluetooth extends IOIOService {
          */
         @Override
         public void loop() throws ConnectionLostException, InterruptedException {
-            try{
-                out_.write(1);
-            }
-            catch(IOException e){
-                e.printStackTrace();
-            }
             Thread.sleep(100);
         }
 
@@ -176,7 +159,4 @@ public class Bluetooth extends IOIOService {
     public void write(String string) {
         write(string.getBytes());
     }
-
-
-
 }

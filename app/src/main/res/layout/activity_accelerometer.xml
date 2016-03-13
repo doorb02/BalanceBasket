@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,6 +9,31 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.group21.balancebasket.Accelerometer">
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context="com.example.group21.balancebasket.Accelerometer"-->
+    <!--android:weightSum="1"-->
+    <!--android:background="@color/black_overlay"-->
+    <!--android:baselineAligned="true">-->
+   <!--<include-->
+    <!--android:id="@+id/tool_bar"-->
+    <!--layout="@layout/tool_bar"/>-->
+
+       <!--<Button-->
+            <!--style="?android:attr/buttonStyleSmall"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/Hamburger"-->
+            <!--android:id="@+id/button"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:background="#32c20c"-->
+            <!--android:textSize="24sp"-->
+            <!--android:textStyle="bold"-->
+            <!--android:onClick="Open_Drawer"/>-->
+
+<!--</LinearLayout>-->
+
 
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
