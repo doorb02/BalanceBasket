@@ -80,4 +80,9 @@
     <string name="Menu">Menu</string>
     <string name="Main">MAIN</string>
     <string name="Hamburger">| Menu |</string>
+
+    <string name="defaultJoystickValue">x: 0 y: 0</string>
+
 </resources>
+
+

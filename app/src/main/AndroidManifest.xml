@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.group21.balancebasket">
+
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,25 +35,31 @@
         <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".RandomActivity"></activity>
-            <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
+        <activity android:name=".RandomActivity" />
+
+        <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
 
         <intent-filter>
             <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
         </intent-filter>
+
         <meta-data
             android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
             android:resource="@xml/accessory_filter" />
         <meta-data
             android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
             android:resource="@xml/device_filter" />
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <service android:name=".Bluetooth" />
 
+        <activity android:name=".Joystick"></activity>
     </application>
 
 </manifest>
