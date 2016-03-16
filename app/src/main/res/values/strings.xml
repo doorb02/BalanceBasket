@@ -70,18 +70,29 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="continue_button">Continue</string>
     <string name="activate_Button">Activate</string>
-    <string name="pitch">pitch</string>
-    <string name="roll">roll</string>
     <string name="SettingsText">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="Menu">Menu</string>
     <string name="Main">MAIN</string>
     <string name="Hamburger">| Menu |</string>
 
+    <!-- Basket drawer -->
+    <string name="title_activity_basket_drawer">Balance Basket</string>
+
+    <!-- Joystick Fragment -->
+    <string name="joystick_fragment">joystick_fragment</string>
     <string name="defaultJoystickValue">x: 0 y: 0</string>
+
+    <!-- IMU Fragment -->
+    <string name="imu_fragment">imu_fragment</string>
+    <string name="pitch">Pitch (x-axis rotation): </string>
+    <string name="roll">Roll (y-axis ritation): </string>
+    <string name="coefficient">Filter Coefficient: </string>
+    <string name="sendingData">Now sending data</string>
+    <string name="notSendingData">Hold to use tilt-control</string>
+
+    <string name="button">Connect to a device first</string>
 
 </resources>
 
