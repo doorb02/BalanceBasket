@@ -70,8 +70,8 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="continue_button">Continue</string>
     <string name="activate_Button">Activate</string>
-    <string name="pitch">pitch</string>
-    <string name="roll">roll</string>
+    <string name="pitch">Pitch: </string>
+    <string name="roll">Roll: </string>
     <string name="SettingsText">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->

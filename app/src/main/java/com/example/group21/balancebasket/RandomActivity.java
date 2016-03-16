@@ -1,4 +1,5 @@
 package com.example.group21.balancebasket;
+//Todo: try to replace with drawer and fragments
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

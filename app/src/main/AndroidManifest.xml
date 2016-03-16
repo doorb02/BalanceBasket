@@ -15,18 +15,6 @@
             android:name="com.android.future.usb.accessory"
             android:required="false" />
 
-        <activity
-            android:name=".Welcome_Screen"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".Accelerometer" />
         <activity
             android:name=".Drawer"
@@ -60,7 +48,15 @@
         <service android:name=".Bluetooth" />
 
         <activity android:name=".Joystick" />
-        <activity android:name=".Connect_Screen"></activity>
+        <activity android:name=".Connect_Screen" />
+        <activity android:name=".Welcome_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Follow"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,5 @@
 package com.example.group21.balancebasket;
-
+//Todo: test connection boolean
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Binder;
@@ -34,7 +34,7 @@ public class Bluetooth extends IOIOService {
     public static final int STATE_CONNECTING = 1; // now initiating an outgoing connection
     public static final int STATE_CONNECTED = 2; // now connected to a remote device
     public static final int STATE_DISCONNECTED = 3; //
-    public static boolean connection = true;
+    public static boolean connection = false;
 
     /*
         Default constructor
