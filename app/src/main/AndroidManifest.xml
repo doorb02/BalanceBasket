@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,10 +19,6 @@
             android:required="false" />
 
         <activity android:name=".Accelerometer" />
-        <activity
-            android:name=".Drawer"
-            android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings" />
@@ -48,6 +47,10 @@
         <service android:name=".Bluetooth" />
 
         <activity android:name=".Joystick" />
+        <activity
+            android:name=".BasketDrawer"
+            android:label="@string/title_activity_basket_drawer"
+            android:theme="@style/AppTheme" />
         <activity android:name=".Connect_Screen" />
         <activity android:name=".Welcome_Activity">
             <intent-filter>

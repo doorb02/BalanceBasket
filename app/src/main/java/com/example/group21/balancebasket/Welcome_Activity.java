@@ -13,7 +13,7 @@ public class Welcome_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome_);
     }
     public void Start_Connect_Activity(View view) {
-        Intent intent = new Intent(this, Connect_Screen.class);
+        Intent intent = new Intent(this, BasketDrawer.class);
         startActivity(intent);
     }
 }

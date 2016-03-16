@@ -97,15 +97,15 @@ public class Joystick extends AppCompatActivity implements JoystickView.OnJoysti
             @Override
             public void run() {
                 mHandler.postDelayed(this, 150); // Send data every 150ms
-//                if (BalanduinoActivity.mChatService == null)
+//                if (BalanduinoActivity.bluetoothService == null)
 //                    return;
-//                if (BalanduinoActivity.mChatService.getState() == BluetoothChatService.STATE_CONNECTED && BalanduinoActivity.checkTab(ViewPagerAdapter.JOYSTICK_FRAGMENT)) {
+//                if (BalanduinoActivity.bluetoothService.getState() == BluetoothChatService.STATE_CONNECTED && BalanduinoActivity.checkTab(ViewPagerAdapter.JOYSTICK_FRAGMENT)) {
 //                    if (!getResources().getBoolean(R.bool.isTablet) || !BalanduinoActivity.buttonState) { // Don't send stop if the button in the IMU fragment is pressed
 //                        if (joystickReleased || (xValue == 0 && yValue == 0))
-//                            BalanduinoActivity.mChatService.write(BalanduinoActivity.sendStop);
+//                            BalanduinoActivity.bluetoothService.write(BalanduinoActivity.sendStop);
 //                        else {
 //                            String message = BalanduinoActivity.sendJoystickValues + d.format(xValue) + ',' + d.format(yValue) + ";";
-//                            BalanduinoActivity.mChatService.write(message);
+//                            BalanduinoActivity.bluetoothService.write(message);
 //                        }
 //                    }
 //                }
