@@ -47,12 +47,10 @@
         <service android:name=".Bluetooth" />
 
         <activity android:name=".Joystick" />
-<<<<<<< HEAD
         <activity
             android:name=".BasketDrawer"
             android:label="@string/title_activity_basket_drawer"
             android:theme="@style/AppTheme" />
-=======
         <activity android:name=".Connect_Screen" />
         <activity android:name=".Welcome_Activity">
             <intent-filter>
@@ -62,7 +60,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Follow"></activity>
->>>>>>> e6abee0a75d200c3f8c457fcd847d8d565760502
     </application>
 
 </manifest>
