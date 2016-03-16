@@ -82,6 +82,10 @@
     <string name="Hamburger">| Menu |</string>
 
     <string name="defaultJoystickValue">x: 0 y: 0</string>
+    <string name="title_activity_connect__screen">Connect_Screen</string>
+    <string name="Connect_Text">Connect</string>
+    <string name="Connection_Text">Establishing Connection...</string>
+    <string name="choose_Text"></string>
 
 </resources>
 

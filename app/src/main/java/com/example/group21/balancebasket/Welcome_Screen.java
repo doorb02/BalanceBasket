@@ -162,8 +162,8 @@ public class Welcome_Screen extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void Start_Accelerometer_Activity(View view) {
-        Intent intent = new Intent(this, Joystick.class);
+    public void Start_Connect_Activity(View view) {
+        Intent intent = new Intent(this, Connect_Screen.class);
         startActivity(intent);
     }
 }

@@ -59,7 +59,8 @@
 
         <service android:name=".Bluetooth" />
 
-        <activity android:name=".Joystick"></activity>
+        <activity android:name=".Joystick" />
+        <activity android:name=".Connect_Screen"></activity>
     </application>
 
 </manifest>

@@ -26,18 +26,18 @@ public class Joystick extends AppCompatActivity implements JoystickView.OnJoysti
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View v = inflater.inflate(R.layout.activity_joystick, container, false);
-        setContentView(R.layout.activity_joystick);
-        mJoystick = (JoystickView) v.findViewById(R.id.joystick);
-        mJoystick.setOnJoystickChangeListener(this);
-
-        mText1 = (TextView) v.findViewById(R.id.textView1);
-        mText1.setText(R.string.defaultJoystickValue);
-
-        Joystick.joystickReleased = true;
-
-        return v;
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        View v = inflater.inflate(R.layout.activity_joystick, container, false);
+//        setContentView(R.layout.activity_joystick);
+//        mJoystick = (JoystickView) v.findViewById(R.id.joystick);
+//        mJoystick.setOnJoystickChangeListener(this);
+//
+//        mText1 = (TextView) v.findViewById(R.id.textView1);
+//        mText1.setText(R.string.defaultJoystickValue);
+//
+//        Joystick.joystickReleased = true;
+//
+//        return v;
     }
 
 //    @Override
