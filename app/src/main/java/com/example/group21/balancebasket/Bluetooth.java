@@ -1,5 +1,5 @@
 package com.example.group21.balancebasket;
-
+//Todo: test connection boolean
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Binder;
@@ -34,6 +34,7 @@ public class Bluetooth extends IOIOService {
     public static final int STATE_CONNECTING = 1; // now initiating an outgoing connection
     public static final int STATE_CONNECTED = 2; // now connected to a remote device
     public static final int STATE_DISCONNECTED = 3; //
+    public static boolean connection = false;
 
     /*
         Default constructor
@@ -92,6 +93,9 @@ public class Bluetooth extends IOIOService {
         OutputStream out;
         InputStream in;
 
+
+
+
         /**
          * Called every time a connection with IOIO has been established.
          * Typically used to open pins.
@@ -99,14 +103,15 @@ public class Bluetooth extends IOIOService {
          */
         @Override
         protected void setup() throws ConnectionLostException {
-            uart = ioio_.openUart(6,7, 9600, Uart.Parity.NONE, Uart.StopBits.ONE);
+            uart = ioio_.openUart(6, 7, 9600, Uart.Parity.NONE, Uart.StopBits.ONE);
             in = uart.getInputStream();
             out = uart.getOutputStream();
 
-            mState = Bluetooth.STATE_CONNECTED;
+            mState = STATE_CONNECTED;
             showVersions(ioio_, "IOIO connected!");
             led_ = ioio_.openDigitalOutput(0, true);
-        }
+            connection = true;
+            }
 
         /**
          * Called repetitively while the IOIO is connected.
@@ -124,12 +129,14 @@ public class Bluetooth extends IOIOService {
                 e.printStackTrace();
             }
             Thread.sleep(100);
+
         }
 
         @Override
         public void disconnected() {
 //            mState = Bluetooth.STATE_DISCONNECTED;
             toast("IOIO disconnected");
+            connection = false;
         }
 
         @Override
@@ -152,6 +159,7 @@ public class Bluetooth extends IOIOService {
                 ioio.getImplVersion(IOIO.VersionType.APP_FIRMWARE_VER),
                 ioio.getImplVersion(IOIO.VersionType.BOOTLOADER_VER),
                 ioio.getImplVersion(IOIO.VersionType.HARDWARE_VER)));
+
     }
 
     private void toast(final String message) {

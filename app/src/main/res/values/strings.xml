@@ -70,6 +70,8 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="continue_button">Continue</string>
     <string name="activate_Button">Activate</string>
+    <string name="pitch">Pitch: </string>
+    <string name="roll">Roll: </string>
     <string name="SettingsText">Settings</string>
 
 
@@ -83,6 +85,10 @@
     <!-- Joystick Fragment -->
     <string name="joystick_fragment">joystick_fragment</string>
     <string name="defaultJoystickValue">x: 0 y: 0</string>
+    <string name="title_activity_connect__screen">Connect_Screen</string>
+    <string name="Connect_Text">Connect</string>
+    <string name="Connection_Text">Establishing Connection...</string>
+    <string name="choose_Text"></string>
 
     <!-- IMU Fragment -->
     <string name="imu_fragment">imu_fragment</string>

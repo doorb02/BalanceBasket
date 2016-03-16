@@ -1,5 +1,6 @@
 package com.example.group21.balancebasket;
-
+//Todo: To fragment
+//Todo: Activate Button
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -156,7 +157,7 @@ public class Accelerometer extends AppCompatActivity {
                             }
                         }
                     } else {
-                        mButton.setText(R.string.activate_Button);
+                        //mButton.setText(R.string.activate_Button);
                     }
                 }
 
