@@ -1,5 +1,6 @@
 package com.example.group21.balancebasket;
-
+//Todo: To fragment
+//Todo: Activate Button
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -56,7 +57,7 @@ public class Accelerometer extends AppCompatActivity {
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
 
-    // setup connection with Bluetooth service
+    // Setup connection with Bluetooth service
     private ServiceConnection blueConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
@@ -77,6 +78,7 @@ public class Accelerometer extends AppCompatActivity {
         context = getApplicationContext();
         setContentView(R.layout.activity_accelerometer);
 
+        // Start Bluetooth service
         startService(new Intent(this, Bluetooth.class));
 
         // get sensorManager and initialize sensor listeners
@@ -155,7 +157,7 @@ public class Accelerometer extends AppCompatActivity {
                             }
                         }
                     } else {
-                        mButton.setText(R.string.activate_Button);
+                        //mButton.setText(R.string.activate_Button);
                     }
                 }
 

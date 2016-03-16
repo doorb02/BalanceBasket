@@ -21,14 +21,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pitch" />
+            android:text="@string/pitch"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginLeft="20dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 
     <TableRow
@@ -38,24 +39,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/roll" />
+            android:text="@string/roll"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginLeft="20dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 </TableLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:text="@string/activate_Button"
         android:id="@+id/activate_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="119dp" />
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>
 
