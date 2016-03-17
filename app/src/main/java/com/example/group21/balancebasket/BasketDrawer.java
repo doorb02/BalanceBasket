@@ -39,7 +39,7 @@ public class BasketDrawer extends AppCompatActivity
 
     private ImuFragment imuFragment;
     private JoystickFragment joystickFragment;
-    private followFragment followFragment;
+    private FollowFragment followFragment;
 
     protected static boolean buttonState;
 
@@ -74,7 +74,7 @@ public class BasketDrawer extends AppCompatActivity
             joystickFragment = new JoystickFragment();
             joystickFragment.setArguments(getIntent().getExtras());
 
-            followFragment = new followFragment();
+            followFragment = new FollowFragment();
             followFragment.setArguments(getIntent().getExtras());
         }
 

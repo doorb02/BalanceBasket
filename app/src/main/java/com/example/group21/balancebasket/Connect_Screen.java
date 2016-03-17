@@ -81,10 +81,10 @@ public class Connect_Screen extends AppCompatActivity {
         Intent intent = new Intent(this, Accelerometer.class);
         startActivity(intent);
     }
-    public void Start_Follow_Activity(View view) {
-        Intent intent = new Intent(this, Follow.class);
-        startActivity(intent);
-    }
+//    public void Start_Follow_Activity(View view) {
+//        Intent intent = new Intent(this, Follow.class);
+//        startActivity(intent);
+//    }
 //    public void Start_List_Activity(View view) {
 //        Intent intent = new Intent(this, List.class);
 //        startActivity(intent);
