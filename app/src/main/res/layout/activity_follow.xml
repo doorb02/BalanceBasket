@@ -9,11 +9,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.group21.balancebasket.Follow">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:text="Follow"
-        android:id="@+id/follow_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
 </RelativeLayout>

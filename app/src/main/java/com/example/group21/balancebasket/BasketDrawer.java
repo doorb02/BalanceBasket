@@ -25,7 +25,7 @@ import android.view.MenuItem;
 
 
 public class BasketDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener, FollowFragment.OnFragmentInteractionListener {
     private static final String TAG = "BasketDrawer";
     public static final boolean D = BuildConfig.DEBUG; // This is automatically set when building
     private static final String NAV_ITEM_ID = "navItemId";
@@ -46,6 +46,7 @@ public class BasketDrawer extends AppCompatActivity
     public final static String sendStop = "CS;";
     public final static String sendIMUValues = "CM,";
     public final static String sendJoystickValues = "CJ,";
+    public final static String sendFollow = "CF,";
 
     public static SensorFusion mSensorFusion = null;
 
