@@ -11,6 +11,7 @@
                     android:icon="@drawable/ic_touch_app_black_24dp"
                     android:title="Joystick" />
                 <item android:id="@+id/nav_follow"
+                    android:icon="@drawable/ic_track_changes_24dp"
                     android:title="follow" />
             </menu>
         </item>
@@ -21,16 +22,16 @@
                 <item
                     android:id="@+id/nav_shopping"
                     android:icon="@drawable/ic_shopping_cart_black_24dp"
-                    android:title="Shopping" />
+                    android:title="List" />
             </menu>
         </item>
 
-        <item android:title="Settings">
-            <menu>
+        <!--<item android:title="Settings">-->
+            <!--<menu>-->
                 <item
                     android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings_applications_black_24dp"
+                    android:icon="@drawable/ic_settings_24dp"
                     android:title="Settings" />
-            </menu>
-        </item>
+            <!--</menu>-->
+        <!--</item>-->
 </menu>

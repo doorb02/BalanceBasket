@@ -1,5 +1,6 @@
 package com.example.group21.balancebasket;
-//Todo: update connection boolean
+//Todo: update connection boolean repeating
+//Todo: Remove if fully copied to fragment
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;

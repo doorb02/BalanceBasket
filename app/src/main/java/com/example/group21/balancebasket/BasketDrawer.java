@@ -1,5 +1,9 @@
 package com.example.group21.balancebasket;
 
+// TODO: first page should be Connectivity screen. Not showing the drawer button. When a mode is chosen by the user, go to selected fragment
+// TODO: if bluetooth connection is not established or lost, disable the drawer menu items that require bluetooth connection.
+// TODO: Add Shopping list
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
@@ -79,14 +83,14 @@ public class BasketDrawer extends AppCompatActivity
             followFragment.setArguments(getIntent().getExtras());
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         BasketDrawer.buttonState = false;
 
@@ -119,27 +123,27 @@ public class BasketDrawer extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.basket_drawer, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.basket_drawer, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -158,7 +162,9 @@ public class BasketDrawer extends AppCompatActivity
         } else if (itemId == R.id.nav_shopping) {
 
         } else if (itemId == R.id.nav_settings) {
-
+            Intent settings;
+            settings = new Intent(this, Settings_Activity.class);
+            startActivity(settings);
         }
         transaction.commit();
 
