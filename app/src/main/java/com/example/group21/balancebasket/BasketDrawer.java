@@ -39,6 +39,7 @@ public class BasketDrawer extends AppCompatActivity
 
     private ImuFragment imuFragment;
     private JoystickFragment joystickFragment;
+    private followFragment followFragment;
 
     protected static boolean buttonState;
 
@@ -72,6 +73,9 @@ public class BasketDrawer extends AppCompatActivity
 
             joystickFragment = new JoystickFragment();
             joystickFragment.setArguments(getIntent().getExtras());
+
+            followFragment = new followFragment();
+            followFragment.setArguments(getIntent().getExtras());
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -148,6 +152,8 @@ public class BasketDrawer extends AppCompatActivity
             transaction.replace(R.id.basketDrawerFrame, imuFragment);
         } else if (itemId == R.id.nav_joystick) {
             transaction.replace(R.id.basketDrawerFrame, joystickFragment);
+        } else if (itemId == R.id.nav_follow) {
+            transaction.replace(R.id.basketDrawerFrame, followFragment);
         } else if (itemId == R.id.nav_shopping) {
 
         } else if (itemId == R.id.nav_settings) {

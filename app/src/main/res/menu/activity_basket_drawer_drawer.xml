@@ -8,6 +8,8 @@
                     android:title="Motion" />
                 <item android:id="@+id/nav_joystick"
                     android:title="Joystick" />
+                <item android:id="@+id/nav_follow"
+                    android:title="follow" />
             <!--</menu>-->
         <!--</item>-->
     </group>
