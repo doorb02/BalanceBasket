@@ -1,5 +1,6 @@
 package com.example.group21.balancebasket;
-//Todo: update connection boolean
+//Todo: update connection boolean repeating
+//Todo: Remove if fully copied to fragment
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -81,10 +82,10 @@ public class Connect_Screen extends AppCompatActivity {
         Intent intent = new Intent(this, Accelerometer.class);
         startActivity(intent);
     }
-    public void Start_Follow_Activity(View view) {
-        Intent intent = new Intent(this, Follow.class);
-        startActivity(intent);
-    }
+//    public void Start_Follow_Activity(View view) {
+//        Intent intent = new Intent(this, Follow.class);
+//        startActivity(intent);
+//    }
 //    public void Start_List_Activity(View view) {
 //        Intent intent = new Intent(this, List.class);
 //        startActivity(intent);

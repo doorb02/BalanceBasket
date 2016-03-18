@@ -1,6 +1,6 @@
 package com.example.group21.balancebasket;
 //TODO: get it to work
-//TODO: To fragment
+//Todo: Remove if fully copied to fragment
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Bundle;

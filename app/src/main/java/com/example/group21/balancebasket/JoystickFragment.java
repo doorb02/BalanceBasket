@@ -15,7 +15,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -28,23 +27,13 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
     DecimalFormat d = (DecimalFormat) NumberFormat.getNumberInstance(Locale.ENGLISH);
     JoystickView mJoystick;
     TextView mText1;
+
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
 
     private double xValue, yValue;
 
-    public static boolean joystickReleased;
-
-    Context context;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the frag ment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private boolean joystickReleased;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,16 +45,11 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment JoystickFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static JoystickFragment newInstance(String param1, String param2) {
+    public static JoystickFragment newInstance() {
         JoystickFragment fragment = new JoystickFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,17 +57,14 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
+    // process the joystick data
     private void newData(double xValue, double yValue, boolean joystickReleased) {
         if (xValue == 0 && yValue == 0)
             joystickReleased = true;
 
-        Joystick.joystickReleased = joystickReleased;
+        BasketDrawer.joystickReleased = joystickReleased;
         this.joystickReleased = joystickReleased;
         this.xValue = xValue;
         this.yValue = yValue;
@@ -94,7 +75,6 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_joystick, container, false);
         View v = inflater.inflate(R.layout.fragment_joystick, container, false);
 
         mJoystick = (JoystickView) v.findViewById(R.id.joystick);
@@ -122,7 +102,7 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
         getActivity().bindService(new Intent(getActivity(), Bluetooth.class), BasketDrawer.blueConnection, Context.BIND_AUTO_CREATE);
 
         mJoystick.invalidate();
-        Joystick.joystickReleased = true;
+        BasketDrawer.joystickReleased = true;
 
         mRunnable = new Runnable() {
             @Override
@@ -131,18 +111,22 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
                 if (BasketDrawer.bluetoothService == null)
                     return;
                 if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_CONNECTED) {
-                    if (!getResources().getBoolean(R.bool.isTablet) || !BasketDrawer.buttonState) { // Don't send stop if the button in the IMU fragment is pressed
-                        if (joystickReleased || (xValue == 0 && yValue == 0))
-                            BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
-                        else {
-                            String message = BasketDrawer.sendJoystickValues + d.format(xValue) + ',' + d.format(yValue) + ";";
-                            BasketDrawer.bluetoothService.write(message);
+                   if (joystickReleased || (xValue == 0 && yValue == 0))
+                       BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
+                   else {
+                       String message = BasketDrawer.sendJoystickValues + d.format(xValue) + ',' + d.format(yValue) + ";";
+                       BasketDrawer.bluetoothService.write(message);
                         }
                     }
                 }
-            }
         };
         mHandler.postDelayed(mRunnable, 150); // Send data every 150ms
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mJoystick.invalidate();
     }
 
     @Override
@@ -164,17 +148,17 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
 
     @Override
     public void setOnTouchListener(double xValue, double yValue) {
-
+        newData(xValue, yValue, false);
     }
 
     @Override
     public void setOnMovedListener(double xValue, double yValue) {
-
+        newData(xValue, yValue, false);
     }
 
     @Override
     public void setOnReleaseListener(double xValue, double yValue) {
-
+        newData(xValue, yValue, true);
     }
 
     /**

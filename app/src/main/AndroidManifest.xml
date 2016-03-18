@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.group21.balancebasket">
 
+
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
@@ -19,10 +20,6 @@
             android:required="false" />
 
         <activity android:name=".Accelerometer" />
-        <activity
-            android:name=".Settings"
-            android:label="@string/title_activity_settings" />
-        <activity android:name=".RandomActivity" />
 
         <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
 
@@ -59,7 +56,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Follow"></activity>
+        <activity
+            android:name=".Settings_Activity"
+            android:label="@string/title_activity_settings_"></activity>
     </application>
 
 </manifest>

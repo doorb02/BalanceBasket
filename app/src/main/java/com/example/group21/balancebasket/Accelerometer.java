@@ -1,6 +1,5 @@
 package com.example.group21.balancebasket;
-//Todo: To fragment
-//Todo: Activate Button
+//Todo: Remove if fully copied to fragment
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

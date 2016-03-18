@@ -6,6 +6,7 @@ package com.example.group21.balancebasket;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -14,7 +15,7 @@ import android.view.View;
 public class JoystickView extends View {
     private OnJoystickChangeListener listener;
 
-    final int holo_blue_dark = 0xff0099cc;
+    final int holo_blue_dark = Color.parseColor("#009688");
     final int buttonGray = 0xFF5C5C5C;
 
     private int buttonColor = buttonGray;

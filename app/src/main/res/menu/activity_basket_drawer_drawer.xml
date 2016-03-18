@@ -2,63 +2,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <!--<item android:title="Control">-->
-            <!--<menu>-->
+        <item android:title="Control">
+            <menu>
                 <item android:id="@+id/nav_motion"
+                    android:icon="@drawable/ic_screen_rotation_black_24dp"
                     android:title="Motion" />
                 <item android:id="@+id/nav_joystick"
+                    android:icon="@drawable/ic_touch_app_black_24dp"
                     android:title="Joystick" />
-            <!--</menu>-->
-        <!--</item>-->
+                <item android:id="@+id/nav_follow"
+                    android:icon="@drawable/ic_track_changes_24dp"
+                    android:title="follow" />
+            </menu>
+        </item>
     </group>
 
-        <item android:title="Shopping">
-            <menu>
+    <item android:title="Shopping">
+             <menu>
                 <item
                     android:id="@+id/nav_shopping"
-                    android:title="Shopping" />
+                    android:icon="@drawable/ic_shopping_cart_black_24dp"
+                    android:title="List" />
             </menu>
         </item>
 
-        <item android:title="Settings">
-            <menu>
+        <!--<item android:title="Settings">-->
+            <!--<menu>-->
                 <item
                     android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_menu_manage"
+                    android:icon="@drawable/ic_settings_24dp"
                     android:title="Settings" />
-            </menu>
-        </item>
-
-    <!--<group android:checkableBehavior="single">-->
-        <!--<item-->
-            <!--android:id="@+id/nav_camera"-->
-            <!--android:icon="@drawable/ic_menu_camera"-->
-            <!--android:title="Import" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_gallery"-->
-            <!--android:icon="@drawable/ic_menu_gallery"-->
-            <!--android:title="Gallery" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_slideshow"-->
-            <!--android:icon="@drawable/ic_menu_slideshow"-->
-            <!--android:title="Slideshow" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_manage"-->
-            <!--android:icon="@drawable/ic_menu_manage"-->
-            <!--android:title="Tools" />-->
-    <!--</group>-->
-
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</menu>-->
-    <!--</item>-->
-
+            <!--</menu>-->
+        <!--</item>-->
 </menu>
