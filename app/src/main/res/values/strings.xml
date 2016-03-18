@@ -3,29 +3,54 @@
 <resources>
     <string name="app_name">BalanceBasket</string>
 
+    <!-- Welcome -->
+    <string name="welcome_text">Welcome to Balance Basket</string>
+    <string name="continue_text">To continue please agree to the terms and agreements.</string>
     <string name="agree_button">Agree</string>
-    <string name="welcome_text">Terms and Conditions</string>
-    <string name="title_activity_drawer">Drawer</string>
 
+    <!-- Connect -->
+    <string name="title_activity_connect__screen">Connect Screen</string>
+    <string name="Connect_Text">Connect</string>
+    <string name="Connection_Text">Establishing Connection...</string>
+
+    <!-- Basket drawer -->
+    <string name="title_activity_basket_drawer">Balance Basket</string>
+    <string name="title_activity_drawer">Drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_settings">Settings</string>
+    <!-- Joystick Fragment -->
+    <string name="joystick_fragment">Joystick Fragment</string>
+    <string name="defaultJoystickValue">x: 0 y: 0</string>
+    <string name="choose_Text"></string>
+
+    <!-- IMU Fragment -->
+    <string name="imu_fragment">IMU Fragment</string>
+    <string name="pitch">Pitch: </string>
+    <string name="roll">Roll: </string>
+    <string name="coefficient">Filter Coefficient: </string>
+    <string name="sendingData">Now Sending Data</string>
+    <string name="notSendingData">Hold to Send</string>
+    <string name="connectFirst">Connect to a Device First</string>
+
+    <!-- Follow Fragment -->
+    <string name="follow_fragment">Follow Fragment</string>
+    <string name="followModeOn">Following</string>
+    <string name="followModeOff">Toggle to follow</string>
+
 
     <!-- Strings related to Settings -->
-
+    <string name="title_activity_settings_">Settings</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
-
     <string name="pref_title_social_recommendations">Enable social recommendations</string>
     <string name="pref_description_social_recommendations">Recommendations for people to contact
         based on your message history
     </string>
-
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
-
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
     <string-array name="pref_example_list_titles">
         <item>Always</item>
@@ -37,10 +62,8 @@
         <item>0</item>
         <item>-1</item>
     </string-array>
-
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
-
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">
         <item>15 minutes</item>
@@ -58,52 +81,16 @@
         <item>360</item>
         <item>-1</item>
     </string-array>
-
     <string name="pref_title_system_sync_settings">System sync settings</string>
-
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
-
     <string name="pref_title_new_message_notifications">New message notifications</string>
-
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
-
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="continue_button">Continue</string>
     <string name="activate_Button">Activate</string>
     <string name="SettingsText">Settings</string>
-
-
-    <string name="Menu">Menu</string>
-    <string name="Main">MAIN</string>
-    <string name="Hamburger">| Menu |</string>
-
-    <!-- Basket drawer -->
-    <string name="title_activity_basket_drawer">Balance Basket</string>
-
-    <!-- Joystick Fragment -->
-    <string name="joystick_fragment">joystick_fragment</string>
-    <string name="defaultJoystickValue">x: 0 y: 0</string>
-    <string name="title_activity_connect__screen">Connect_Screen</string>
-    <string name="Connect_Text">Connect</string>
-    <string name="Connection_Text">Establishing Connection...</string>
-    <string name="choose_Text"></string>
-
-    <!-- IMU Fragment -->
-    <string name="imu_fragment">imu_fragment</string>
-    <string name="pitch">Pitch (x-axis rotation): </string>
-    <string name="roll">Roll (y-axis ritation): </string>
-    <string name="coefficient">Filter Coefficient: </string>
-    <string name="sendingData">Now sending data</string>
-    <string name="notSendingData">Hold to use tilt-control</string>
-
-    <string name="button">Connect to a device first</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings_">Settings</string>
-
 </resources>
 
 

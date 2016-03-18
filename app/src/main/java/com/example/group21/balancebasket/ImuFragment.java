@@ -149,7 +149,7 @@ public class ImuFragment extends Fragment {
                             }
                         }
                     } else {
-                        mButton.setText(R.string.button);
+                        mButton.setText(R.string.connectFirst);
 //                        if (BasketDrawer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT && BasketDrawer.joystickReleased)
 //                            CustomViewPager.setPagingEnabled(true);
                     }

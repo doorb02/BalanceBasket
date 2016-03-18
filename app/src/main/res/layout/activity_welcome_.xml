@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Welcome to Balance Basket"
+        android:text="@string/welcome_text"
         android:id="@+id/welcome_text"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="To continue please agree to the terms and agreements. "
+        android:text="@string/continue_text"
         android:id="@+id/please_text"
         android:layout_below="@+id/welcome_text"
         android:gravity="center"
