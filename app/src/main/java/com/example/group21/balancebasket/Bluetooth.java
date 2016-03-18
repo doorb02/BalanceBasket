@@ -22,7 +22,7 @@ import ioio.lib.util.android.IOIOService;
 public class Bluetooth extends IOIOService {
     // Debugging
     private static final String TAG = "Bluetooth";
-    private static final boolean D = Accelerometer.D;
+    private static final boolean D = BasketDrawer.D;
 
     private int mState;
     private byte[] coordinates = new byte[1];

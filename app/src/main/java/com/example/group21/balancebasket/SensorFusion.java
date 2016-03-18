@@ -44,7 +44,7 @@ import java.util.TimerTask;
 public class SensorFusion implements SensorEventListener {
     // For debugging
     private static final String TAG = "SensorFusion";
-    public static final boolean D = Accelerometer.D;
+    public static final boolean D = BasketDrawer.D;
 
     // Stores information about all the different sensors
     private SensorManager mSensorManager = null;

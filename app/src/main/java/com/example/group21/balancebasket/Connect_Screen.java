@@ -75,12 +75,12 @@ public class Connect_Screen extends AppCompatActivity {
     }
 
     public void Start_Joystick_Activity(View view) {
-        Intent intent = new Intent(this, Joystick.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, Joystick.class);
+//        startActivity(intent);
     }
     public void Start_Accelerometer_Activity(View view) {
-        Intent intent = new Intent(this, Accelerometer.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, Accelerometer.class);
+//        startActivity(intent);
     }
 //    public void Start_Follow_Activity(View view) {
 //        Intent intent = new Intent(this, Follow.class);
