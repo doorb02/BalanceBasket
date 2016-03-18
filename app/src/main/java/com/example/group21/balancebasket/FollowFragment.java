@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 /**
@@ -26,7 +25,6 @@ public class FollowFragment extends Fragment {
     private Runnable mRunnable;
     private int counter = 0;
     private boolean toggleButtonState;
-
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -139,15 +137,15 @@ public class FollowFragment extends Fragment {
                             if (toggleButtonState) {
 //                                lockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendFollow + ";");
-                                fButton.setText(R.string.sendingData);
+                                fButton.setText(R.string.followModeOn);
                             } else {
 //                                unlockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
-                                fButton.setText(R.string.notSendingData);
+                                fButton.setText(R.string.followModeOff);
                             }
                         }
                     } else {
-                        fButton.setText(R.string.button);
+                        fButton.setText(R.string.connectFirst);
 //                        if (BasketDrawer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT && BasketDrawer.joystickReleased)
 //                            CustomViewPager.setPagingEnabled(true);
                     }
@@ -155,7 +153,6 @@ public class FollowFragment extends Fragment {
             }
         };
         mHandler.postDelayed(mRunnable, 50); // Update IMU data every 50ms
-
     }
 
     @Override
