@@ -1,19 +1,17 @@
 package com.example.group21.balancebasket;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.zip.Inflater;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +26,7 @@ public class ConnectscreenFragment extends Fragment {
     private Button motionButton;
     private Button joystickButton;
     private Button followButton;
+    private Button shoppinglistButton;
     private TextView connectionText;
     private TextView chooseText;
     private ProgressBar progressBar;
@@ -57,12 +56,13 @@ public class ConnectscreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkConnection();
     }
 
-    private void checkConnection() {
-        if(Bluetooth.connection){
-            // TODO: Check with loop
+    // check for active connection and activate all buttons when connected
+    public void checkConnection() {
+        boolean isConnected = BasketDrawer.isIOIOConnected();
+        if(isConnected){
+            // TODO: Check with listener
             motionButton.setEnabled(true);
             joystickButton.setEnabled(true);
             followButton.setEnabled(true);
@@ -79,23 +79,78 @@ public class ConnectscreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_connect__screen, container, false);
 
-//        startService(new Intent(this, Bluetooth.class));
-
         motionButton = (Button) view.findViewById(R.id.Motion_Button);
         joystickButton = (Button) view.findViewById(R.id.Joystick_Button);
         followButton = (Button) view.findViewById(R.id.Follow_Button);
+        shoppinglistButton = (Button) view.findViewById(R.id.List_Button);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         connectionText = (TextView) view.findViewById(R.id.Connection_text);
         chooseText = (TextView) view.findViewById(R.id.choose_Text);
 
+        // initiate button listeners
+        final FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        makeMotionButtonListener(transaction);
+        makeJoystickButtonListener(transaction);
+        makeFollowButtonListener(transaction);
+        makeShoppinglistButtonListener(transaction);
+
         motionButton.setEnabled(false);
         joystickButton.setEnabled(false);
         followButton.setEnabled(false);
-//        bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
-//        checkConnection();
+        shoppinglistButton.setEnabled(true);
+
         return view;
 
     }
+
+    private void makeShoppinglistButtonListener(final FragmentTransaction transaction) {
+        shoppinglistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingListFragment shoppinglistFragment = new ShoppingListFragment();
+                shoppinglistFragment.setArguments(getActivity().getIntent().getExtras());
+                transaction.replace(R.id.basketDrawerFrame, shoppinglistFragment);
+                transaction.commit();
+            }
+        });
+    }
+
+    private void makeFollowButtonListener(final FragmentTransaction transaction) {
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FollowFragment followFragment = new FollowFragment();
+                followFragment.setArguments(getActivity().getIntent().getExtras());
+                transaction.replace(R.id.basketDrawerFrame, followFragment);
+                transaction.commit();
+            }
+        });
+    }
+
+    private void makeJoystickButtonListener(final FragmentTransaction transaction) {
+        joystickButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JoystickFragment joystickFragment = new JoystickFragment();
+                joystickFragment.setArguments(getActivity().getIntent().getExtras());
+                transaction.replace(R.id.basketDrawerFrame, joystickFragment);
+                transaction.commit();
+            }
+        });
+    }
+
+    private void makeMotionButtonListener(final FragmentTransaction transaction) {
+        motionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImuFragment imuFragment = new ImuFragment();
+                imuFragment.setArguments(getActivity().getIntent().getExtras());
+            transaction.replace(R.id.basketDrawerFrame, imuFragment);
+            transaction.commit();
+            }
+        });
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -121,23 +176,11 @@ public class ConnectscreenFragment extends Fragment {
         mListener = null;
     }
 
-//    public void Start_Joystick_Activity(View view) {
-//        Intent intent = new Intent(this, JoystickFragment.class);
-//        startActivity(intent);
-//    }
-//    public void Start_Accelerometer_Activity(View view) {
-//        Intent intent = new Intent(this, Accelerometer.class);
-//        startActivity(intent);
-//    }
-//    public void Start_Follow_Activity(View view) {
-//        Intent intent = new Intent(this, Follow.class);
-//        startActivity(intent);
-//    }
-//    public void Start_List_Activity(View view) {
-//        Intent intent = new Intent(this, List.class);
-//        startActivity(intent);
-//    }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkConnection();
+    }
 
     /**
      * This interface must be implemented by activities that contain this
