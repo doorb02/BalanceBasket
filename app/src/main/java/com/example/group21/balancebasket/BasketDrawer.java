@@ -29,7 +29,7 @@ import android.view.MenuItem;
 
 
 public class BasketDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener, FollowFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener, FollowFragment.OnFragmentInteractionListener, ConnectscreenFragment.OnFragmentInteractionListener {
     private static final String TAG = "BasketDrawer";
     public static final boolean D = BuildConfig.DEBUG; // This is automatically set when building
     private static final String NAV_ITEM_ID = "navItemId";
@@ -44,6 +44,8 @@ public class BasketDrawer extends AppCompatActivity
     private ImuFragment imuFragment;
     private JoystickFragment joystickFragment;
     private FollowFragment followFragment;
+    private ConnectscreenFragment connectscreenFragment;
+    private DataListActivity dataListFragment;
 
     protected static boolean buttonState;
 
@@ -53,6 +55,9 @@ public class BasketDrawer extends AppCompatActivity
     public final static String sendFollow = "CF,";
 
     public static SensorFusion mSensorFusion = null;
+
+    public static boolean connection = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,12 @@ public class BasketDrawer extends AppCompatActivity
 
             followFragment = new FollowFragment();
             followFragment.setArguments(getIntent().getExtras());
+
+            connectscreenFragment = new ConnectscreenFragment();
+            connectscreenFragment.setArguments(getIntent().getExtras());
+
+            dataListFragment = new DataListActivity();
+            dataListFragment.setArguments(getIntent().getExtras());
         }
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -104,6 +115,10 @@ public class BasketDrawer extends AppCompatActivity
         // listen for navigation events
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.basketDrawerFrame, connectscreenFragment);
+        transaction.commit();
     }
 
     @Override
@@ -160,7 +175,7 @@ public class BasketDrawer extends AppCompatActivity
         } else if (itemId == R.id.nav_follow) {
             transaction.replace(R.id.basketDrawerFrame, followFragment);
         } else if (itemId == R.id.nav_shopping) {
-
+//            transaction.replace(R.id.ListView, dataListFragment);
         } else if (itemId == R.id.nav_settings) {
             Intent settings;
             settings = new Intent(this, Settings_Activity.class);
@@ -205,6 +220,7 @@ public class BasketDrawer extends AppCompatActivity
 
     // Setup connection with Bluetooth service
     protected static ServiceConnection blueConnection = new ServiceConnection() {
+
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
             Bluetooth.BlueBinder b = (Bluetooth.BlueBinder) binder;
@@ -212,7 +228,8 @@ public class BasketDrawer extends AppCompatActivity
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
+        public void onServiceDisconnected(ComponentName name)
+        {
             bluetoothService = null;
         }
     };

@@ -1,36 +1,38 @@
 package com.example.group21.balancebasket;
 
-import android.app.Fragment;
+
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 public class DataListActivity extends Fragment {
 
-    ListView listView;
-    SQLiteDatabase sqLiteDatabase;
-    UserDbHelper userDbHelper;
-    Cursor cursor;
-    ListDataAdapter listDataAdapter;
+    private ListView listView;
+    private SQLiteDatabase sqLiteDatabase;
+    private UserDBHelper userDbHelper;
+    private Cursor cursor;
+    private ListDataAdapter listDataAdapter;
+    private DataProvider dataProvider;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.data_list_layout);
-        listView = (ListView) findViewById(R.id.ListView);
-        listDataAdapter = new ListDataAdapter(getApplicationContext(), R.layout.row_layout);
+//        setContentView(R.layout.data_list_layout);
+//        listView = (ListView) findViewById(R.id.ListView);
+        listDataAdapter = new ListDataAdapter(this.getContext(), R.layout.row_layout);
         listView.setAdapter(listDataAdapter);
 
-        userDbHelper = new UserDbHelper(getApplicationContext());
+        userDbHelper = new UserDBHelper(this.getContext());
         sqLiteDatabase = userDbHelper.getReadableDatabase();
-        cursor = UserDbHelper.getProducts(sqLiteDatabase);
+        cursor = dataProvider.query(null, null, null, null, null);// UserDBHelper.getProducts(sqLiteDatabase);
 
         if (cursor.moveToFirst()) {
             do {
@@ -38,12 +40,21 @@ public class DataListActivity extends Fragment {
                 String name, price;
                 name = cursor.getString(0);
                 price = cursor.getString(1);
-                DataProvider dataProvider = new DataProvider(name, price);
+//                DataProvider dataProvider = new DataProvider(name, price);
                 listDataAdapter.add(dataProvider);
 
 
             } while (cursor.moveToNext());
         }
 
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.data_list_layout, container, false);
+        listView = (ListView) view.findViewById(R.id.ListView);
+        return view;
     }
 }
