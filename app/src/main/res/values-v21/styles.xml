@@ -10,8 +10,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/material_deep_teal_500</item>
-        <item name="colorPrimaryDark">@color/primary_dark_material_light</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
-        <item name="android:statusBarColor">@color/primary_dark_material_light</item>
+        <item name="colorPrimaryDark">@color/material_deep_teal_200</item>
+        <item name="colorAccent">@color/material_blue_grey_800</item>
+        <item name="android:statusBarColor">@color/material_deep_teal_200</item>
     </style>
 </resources>

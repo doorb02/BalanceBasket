@@ -29,7 +29,7 @@ import android.view.MenuItem;
 
 
 public class BasketDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener, FollowFragment.OnFragmentInteractionListener, ConnectscreenFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener, FollowFragment.OnFragmentInteractionListener, ConnectscreenFragment.OnFragmentInteractionListener, ShoppingListFragment.OnFragmentInteractionListener {
     private static final String TAG = "BasketDrawer";
     public static final boolean D = BuildConfig.DEBUG; // This is automatically set when building
     private static final String NAV_ITEM_ID = "navItemId";
@@ -45,6 +45,7 @@ public class BasketDrawer extends AppCompatActivity
     private JoystickFragment joystickFragment;
     private ConnectscreenFragment connectscreenFragment;
     private FollowFragment followFragment;
+    private ShoppingListFragment shoppinglistFragment;
     private DataListActivity dataListFragment;
 
     protected static boolean buttonState;
@@ -89,6 +90,9 @@ public class BasketDrawer extends AppCompatActivity
 
             connectscreenFragment = new ConnectscreenFragment();
             connectscreenFragment.setArguments(getIntent().getExtras());
+
+            shoppinglistFragment = new ShoppingListFragment();
+            shoppinglistFragment.setArguments(getIntent().getExtras());
 
             dataListFragment = new DataListActivity();
             dataListFragment.setArguments(getIntent().getExtras());
@@ -190,7 +194,7 @@ public class BasketDrawer extends AppCompatActivity
         } else if (itemId == R.id.nav_follow) {
             transaction.replace(R.id.basketDrawerFrame, followFragment);
         } else if (itemId == R.id.nav_shopping) {
-//            transaction.replace(R.id.ListView, dataListFragment);
+            transaction.replace(R.id.basketDrawerFrame, shoppinglistFragment);
         } else if (itemId == R.id.nav_settings) {
             Intent settings;
             settings = new Intent(this, Settings_Activity.class);

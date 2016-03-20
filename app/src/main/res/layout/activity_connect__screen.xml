@@ -42,7 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"/>
 
 
     </LinearLayout>
@@ -76,8 +77,7 @@
         android:layout_alignTop="@+id/Joystick_Button"
         android:layout_alignParentStart="true"
         android:layout_weight="1"
-        android:drawableBottom="@drawable/tilt"
-
+        android:drawableBottom="@drawable/ic_screen_rotation_black_24dp"
         android:onClick="Start_Accelerometer_Activity"/>
 
     <Button
@@ -86,7 +86,7 @@
         android:text="Joystick"
         android:id="@+id/Joystick_Button"
         android:layout_weight="1"
-        android:drawableBottom="@drawable/joystick"
+        android:drawableBottom="@drawable/ic_touch_app_black_24dp"
         android:onClick="Start_Joystick_Activity"/>
 
     <Button
@@ -97,6 +97,7 @@
         android:layout_below="@+id/Connect_text"
         android:layout_alignParentEnd="true"
         android:layout_weight="1"
+        android:drawableBottom="@drawable/ic_track_changes_24dp"
         android:onClick="Start_Follow_Activity"/>
 
 
@@ -109,7 +110,8 @@
         android:id="@+id/List_Button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:drawableBottom="@drawable/ic_shopping_cart_black_24dp"/>
         <!--android:onClick="Start_List_Activity"-->
 
     </LinearLayout>

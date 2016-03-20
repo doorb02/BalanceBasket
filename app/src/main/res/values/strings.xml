@@ -5,7 +5,7 @@
 
     <!-- Welcome -->
     <string name="welcome_text">Welcome to Balance Basket</string>
-    <string name="continue_text">Please agree to the terms and conditionsZ to continue.</string>
+    <string name="continue_text">Please agree to the terms and conditions to continue.</string>
     <string name="agree_button">Agree</string>
 
     <!-- Connect -->
