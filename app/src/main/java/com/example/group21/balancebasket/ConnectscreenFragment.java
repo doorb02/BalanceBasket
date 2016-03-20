@@ -60,7 +60,7 @@ public class ConnectscreenFragment extends Fragment {
 
     // check for active connection and activate all buttons when connected
     public void checkConnection() {
-        boolean isConnected = BasketDrawer.isConnected();
+        boolean isConnected = BasketDrawer.isIOIOConnected();
         if(isConnected){
             // TODO: Check with listener
             motionButton.setEnabled(true);

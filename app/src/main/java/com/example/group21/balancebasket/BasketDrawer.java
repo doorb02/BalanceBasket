@@ -120,26 +120,26 @@ public class BasketDrawer extends AppCompatActivity
         transaction.replace(R.id.basketDrawerFrame, connectscreenFragment);
         transaction.commit();
         bindConnection();
+        isIOIOConnected();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        isIOIOConnected();
         bindConnection();
     }
 
     private void bindConnection() {
-        boolean isBound = isConnected;
-        if(!isBound) {
-            isBound = bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
-            if(isBound) {
+         bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    public static boolean isIOIOConnected() {
+        if(bluetoothService != null) {
+            if(bluetoothService.getState() == 2){
                 isConnected = true;
             }
         }
-    }
-
-    public static boolean isConnected() {
         return isConnected;
     }
 
