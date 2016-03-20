@@ -62,7 +62,7 @@ public class Connect_Screen extends AppCompatActivity {
     }
 
     private void checkConnection() {
-        if(Bluetooth.connection){
+        if(Bluetooth.STATE_CONNECTED == 2){
             // TODO: Check with loop
             motionButton.setEnabled(true);
             joystickButton.setEnabled(true);

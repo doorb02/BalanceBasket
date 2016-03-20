@@ -43,8 +43,8 @@ public class BasketDrawer extends AppCompatActivity
 
     private ImuFragment imuFragment;
     private JoystickFragment joystickFragment;
-    private FollowFragment followFragment;
     private ConnectscreenFragment connectscreenFragment;
+    private FollowFragment followFragment;
     private DataListActivity dataListFragment;
 
     protected static boolean buttonState;
@@ -56,7 +56,7 @@ public class BasketDrawer extends AppCompatActivity
 
     public static SensorFusion mSensorFusion = null;
 
-    public static boolean connection = false;
+    private static boolean isConnected = false;
 
 
     @Override
@@ -119,13 +119,28 @@ public class BasketDrawer extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.basketDrawerFrame, connectscreenFragment);
         transaction.commit();
+        bindConnection();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
+        bindConnection();
+    }
+
+    private void bindConnection() {
+        boolean isBound = isConnected;
+        if(!isBound) {
+            isBound = bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
+            if(isBound) {
+                isConnected = true;
+            }
+        }
+    }
+
+    public static boolean isConnected() {
+        return isConnected;
     }
 
     @Override
