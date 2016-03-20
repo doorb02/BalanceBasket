@@ -1,7 +1,6 @@
 package com.example.group21.balancebasket;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,12 +40,9 @@ public class ConnectscreenFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ConnectscreenFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ConnectscreenFragment newInstance(String param1, String param2) {
+    public static ConnectscreenFragment newInstance() {
         ConnectscreenFragment fragment = new ConnectscreenFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
