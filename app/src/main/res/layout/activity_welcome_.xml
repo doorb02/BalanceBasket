@@ -16,25 +16,37 @@
         android:id="@+id/agree_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="Start_Connect_Activity"/>
+        android:onClick="Start_Connect_Activity"
+        android:background="@color/material_deep_teal_500" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/welcome_text"
         android:id="@+id/welcome_text"
-        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_above="@+id/please_text"
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/continue_text"
         android:id="@+id/please_text"
-        android:layout_below="@+id/welcome_text"
         android:gravity="center"
+
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/agree_button"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/basket"
+        android:layout_above="@+id/welcome_text"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

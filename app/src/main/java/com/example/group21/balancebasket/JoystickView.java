@@ -15,7 +15,7 @@ import android.view.View;
 public class JoystickView extends View {
     private OnJoystickChangeListener listener;
 
-    final int holo_blue_dark = Color.parseColor("#009688");
+    final int holo_blue_dark = Color.parseColor("#DD2C00");
     final int buttonGray = 0xFF5C5C5C;
 
     private int buttonColor = buttonGray;
