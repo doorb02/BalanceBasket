@@ -1,7 +1,9 @@
 package com.example.group21.balancebasket;
 
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import static com.example.group21.balancebasket.UserContract.NewProduct.*;
@@ -30,24 +32,24 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
-//    public void addProduct (SQLiteDatabase db, String name, int price){
+   public void addProduct (SQLiteDatabase db, String name, int price){
+
+       ContentValues contentValues = new ContentValues();
+      contentValues.put(PRODUCT_NAME, name);
+     contentValues.put(PRODUCT_PRICE, price);
+
+    db.insert(TABLE_NAME, null, contentValues);
+
+   }
 //
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(PRODUCT_NAME, name);
-//        contentValues.put(PRODUCT_PRICE, price);
+ public static Cursor getProducts(SQLiteDatabase db){
+   Cursor cursor = null;
+    String[] projections = {PRODUCT_NAME, PRODUCT_PRICE};
 //
-//        db.insert(TABLE_NAME, null, contentValues);
+    db.query(TABLE_NAME, projections, null,null,null,null,null);
+     return cursor;
 //
-//    }
-//
-//    public static Cursor getProducts(SQLiteDatabase db){
-//        Cursor cursor = null;
-//        String[] projections = {PRODUCT_NAME, PRODUCT_PRICE};
-//
-//        db.query(TABLE_NAME, projections, null,null,null,null,null);
-//        return cursor;
-//
-//    }
+  }
 
 
 
