@@ -17,7 +17,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="Start_Connect_Activity"
-        android:background="@color/material_deep_teal_500" />
+        android:background="@color/material_deep_teal_500"
+        />
+
 
     <TextView
         android:layout_width="match_parent"
@@ -48,5 +50,6 @@
         android:src="@drawable/basket"
         android:layout_above="@+id/welcome_text"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

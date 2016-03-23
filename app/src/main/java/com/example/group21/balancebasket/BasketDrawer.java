@@ -26,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 
 public class BasketDrawer extends AppCompatActivity
@@ -38,6 +39,7 @@ public class BasketDrawer extends AppCompatActivity
     private static Context context;
 
     public static boolean joystickReleased = true;
+    private static boolean follow =false;
 
     public static Bluetooth bluetoothService;
 
@@ -77,6 +79,7 @@ public class BasketDrawer extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
 
         if (findViewById(R.id.drawer_layout) != null) {
             imuFragment = new ImuFragment();
@@ -157,27 +160,37 @@ public class BasketDrawer extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.basket_drawer, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        // TODO: Only show in shopping list fragment
+        getMenuInflater().inflate(R.menu.follow_toggle, menu);
+        return true;
+    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_follow) {
+            // TODO: set follow mode and repeating: send instructions to IOIO
+
+            if(follow){
+                item.setIcon(R.drawable.ic_follow_on);
+                follow=false;
+            } else {
+                item.setIcon(R.drawable.ic_portable_wifi_off_24dp);
+                follow=true;
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
