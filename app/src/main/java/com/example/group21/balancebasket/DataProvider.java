@@ -11,23 +11,14 @@ public class DataProvider extends ContentProvider {
     private String name;
     private String price;
 
-    public String getName() {
-        return name;
-    }
+    private UserDBHelper mOpenHelper;
 
-    public void setName(String name) {
+    public DataProvider() {}
+
+    public DataProvider(String name, String price){
         this.name = name;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
         this.price = price;
     }
-
-    private UserDBHelper mOpenHelper;
 
     @Override
     public boolean onCreate() {
@@ -63,11 +54,22 @@ public class DataProvider extends ContentProvider {
         return 0;
     }
 
-//    public DataProvider(String name, String price){
-//        this.name = name;
-//        this.price = price;
-//
-//    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
 
 
 

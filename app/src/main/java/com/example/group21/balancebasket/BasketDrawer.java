@@ -48,7 +48,6 @@ public class BasketDrawer extends AppCompatActivity
     private ConnectscreenFragment connectscreenFragment;
     private FollowFragment followFragment;
     private ShoppingListFragment shoppinglistFragment;
-    private DataListActivity dataListFragment;
 
     protected static boolean buttonState;
 
@@ -96,9 +95,6 @@ public class BasketDrawer extends AppCompatActivity
 
             shoppinglistFragment = new ShoppingListFragment();
             shoppinglistFragment.setArguments(getIntent().getExtras());
-
-            dataListFragment = new DataListActivity();
-            dataListFragment.setArguments(getIntent().getExtras());
         }
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -163,8 +159,6 @@ public class BasketDrawer extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        // TODO: Only show in shopping list fragment
-        getMenuInflater().inflate(R.menu.follow_toggle, menu);
         return true;
     }
 
