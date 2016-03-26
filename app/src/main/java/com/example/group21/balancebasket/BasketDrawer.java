@@ -159,8 +159,6 @@ public class BasketDrawer extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        // TODO: Only show in shopping list fragment
-        getMenuInflater().inflate(R.menu.follow_toggle, menu);
         return true;
     }
 
