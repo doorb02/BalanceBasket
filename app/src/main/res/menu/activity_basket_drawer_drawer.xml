@@ -12,7 +12,7 @@
                     android:title="Joystick" />
                 <item android:id="@+id/nav_follow"
                     android:icon="@drawable/ic_track_changes_24dp"
-                    android:title="follow" />
+                    android:title="Follow" />
             </menu>
         </item>
     </group>
@@ -26,12 +26,8 @@
             </menu>
         </item>
 
-        <!--<item android:title="Settings">-->
-            <!--<menu>-->
-                <item
-                    android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_settings_24dp"
-                    android:title="Settings" />
-            <!--</menu>-->
-        <!--</item>-->
+    <item
+         android:id="@+id/nav_settings"
+         android:icon="@drawable/ic_settings_24dp"
+         android:title="Settings" />
 </menu>

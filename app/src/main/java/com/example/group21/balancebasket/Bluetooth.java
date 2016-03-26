@@ -7,6 +7,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -93,9 +95,6 @@ public class Bluetooth extends IOIOService {
         OutputStream out;
         InputStream in;
 
-
-
-
         /**
          * Called every time a connection with IOIO has been established.
          * Typically used to open pins.
@@ -111,7 +110,7 @@ public class Bluetooth extends IOIOService {
             showVersions(ioio_, "IOIO connected!");
             led_ = ioio_.openDigitalOutput(0, true);
             connection = true;
-            }
+        }
 
         /**
          * Called repetitively while the IOIO is connected.
@@ -134,7 +133,7 @@ public class Bluetooth extends IOIOService {
 
         @Override
         public void disconnected() {
-//            mState = Bluetooth.STATE_DISCONNECTED;
+            mState = Bluetooth.STATE_DISCONNECTED;
             toast("IOIO disconnected");
             connection = false;
         }

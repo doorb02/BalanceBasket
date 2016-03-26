@@ -5,4 +5,11 @@
     <color name="colorAccent">#4a06a3</color>
 
     <color name="black_overlay">#95000000</color>
+    <color name="material_deep_teal_500">#009688</color>
+    <color name="material_deep_teal_200">#004d40</color>
+    <color name="material_grey_600">#dd2c00</color>
+    <color name="primary_material_light_1">#009688</color>
+    <color name="primary_material_light_2">#009688</color>
+    <color name="material_blue_grey_800">#90a4ae</color>
+    <color name="primary_material_light_3">#009688</color>
 </resources>

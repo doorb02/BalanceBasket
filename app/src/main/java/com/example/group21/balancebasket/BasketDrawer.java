@@ -26,10 +26,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 
 public class BasketDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener, FollowFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ImuFragment.OnFragmentInteractionListener, JoystickFragment.OnFragmentInteractionListener, FollowFragment.OnFragmentInteractionListener, ConnectscreenFragment.OnFragmentInteractionListener, ShoppingListFragment.OnFragmentInteractionListener {
     private static final String TAG = "BasketDrawer";
     public static final boolean D = BuildConfig.DEBUG; // This is automatically set when building
     private static final String NAV_ITEM_ID = "navItemId";
@@ -38,12 +39,16 @@ public class BasketDrawer extends AppCompatActivity
     private static Context context;
 
     public static boolean joystickReleased = true;
+    private static boolean follow =false;
 
     public static Bluetooth bluetoothService;
 
     private ImuFragment imuFragment;
     private JoystickFragment joystickFragment;
+    private ConnectscreenFragment connectscreenFragment;
     private FollowFragment followFragment;
+    private ShoppingListFragment shoppinglistFragment;
+    private DataListActivity dataListFragment;
 
     protected static boolean buttonState;
 
@@ -53,6 +58,9 @@ public class BasketDrawer extends AppCompatActivity
     public final static String sendFollow = "CF,";
 
     public static SensorFusion mSensorFusion = null;
+
+    private static boolean isConnected = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,7 @@ public class BasketDrawer extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
 
         if (findViewById(R.id.drawer_layout) != null) {
             imuFragment = new ImuFragment();
@@ -81,6 +90,15 @@ public class BasketDrawer extends AppCompatActivity
 
             followFragment = new FollowFragment();
             followFragment.setArguments(getIntent().getExtras());
+
+            connectscreenFragment = new ConnectscreenFragment();
+            connectscreenFragment.setArguments(getIntent().getExtras());
+
+            shoppinglistFragment = new ShoppingListFragment();
+            shoppinglistFragment.setArguments(getIntent().getExtras());
+
+            dataListFragment = new DataListActivity();
+            dataListFragment.setArguments(getIntent().getExtras());
         }
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -104,13 +122,32 @@ public class BasketDrawer extends AppCompatActivity
         // listen for navigation events
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.basketDrawerFrame, connectscreenFragment);
+        transaction.commit();
+        bindConnection();
+        isIOIOConnected();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        isIOIOConnected();
+        bindConnection();
+    }
 
-        bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
+    private void bindConnection() {
+         bindService(new Intent(this, Bluetooth.class), blueConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    public static boolean isIOIOConnected() {
+        if(bluetoothService != null) {
+            if(bluetoothService.getState() == 2){
+                isConnected = true;
+            }
+        }
+        return isConnected;
     }
 
     @Override
@@ -123,27 +160,37 @@ public class BasketDrawer extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.basket_drawer, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        // TODO: Only show in shopping list fragment
+        getMenuInflater().inflate(R.menu.follow_toggle, menu);
+        return true;
+    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_follow) {
+            // TODO: set follow mode and repeating: send instructions to IOIO
+
+            if(follow){
+                item.setIcon(R.drawable.ic_follow_on);
+                follow=false;
+            } else {
+                item.setIcon(R.drawable.ic_portable_wifi_off_24dp);
+                follow=true;
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -160,7 +207,7 @@ public class BasketDrawer extends AppCompatActivity
         } else if (itemId == R.id.nav_follow) {
             transaction.replace(R.id.basketDrawerFrame, followFragment);
         } else if (itemId == R.id.nav_shopping) {
-
+            transaction.replace(R.id.basketDrawerFrame, shoppinglistFragment);
         } else if (itemId == R.id.nav_settings) {
             Intent settings;
             settings = new Intent(this, Settings_Activity.class);
@@ -205,6 +252,7 @@ public class BasketDrawer extends AppCompatActivity
 
     // Setup connection with Bluetooth service
     protected static ServiceConnection blueConnection = new ServiceConnection() {
+
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
             Bluetooth.BlueBinder b = (Bluetooth.BlueBinder) binder;
@@ -212,7 +260,8 @@ public class BasketDrawer extends AppCompatActivity
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
+        public void onServiceDisconnected(ComponentName name)
+        {
             bluetoothService = null;
         }
     };

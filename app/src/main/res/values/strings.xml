@@ -5,7 +5,7 @@
 
     <!-- Welcome -->
     <string name="welcome_text">Welcome to Balance Basket</string>
-    <string name="continue_text">To continue please agree to the terms and agreements.</string>
+    <string name="continue_text">Please agree to the terms and conditions to continue.</string>
     <string name="agree_button">Agree</string>
 
     <!-- Connect -->
@@ -91,6 +91,10 @@
     <string name="continue_button">Continue</string>
     <string name="activate_Button">Activate</string>
     <string name="SettingsText">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_follow_toggle">follow_toggle</string>
 </resources>
 
 
