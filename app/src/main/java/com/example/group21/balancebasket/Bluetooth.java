@@ -28,6 +28,8 @@ public class Bluetooth extends IOIOService {
 
     private int mState;
     private byte[] coordinates = new byte[1];
+    private static byte[] information = new byte[1];
+    public static String input;
 
     private final IBinder blueBinder =  new BlueBinder();
 
@@ -64,7 +66,6 @@ public class Bluetooth extends IOIOService {
 //            notification.flags |= Notification.FLAG_ONGOING_EVENT;
 //            nm.notify(0, notification);
         }
-
     }
 
     @Nullable
@@ -124,6 +125,7 @@ public class Bluetooth extends IOIOService {
         public void loop() throws ConnectionLostException, InterruptedException {
             try {
               out.write(coordinates);
+              in.read(information);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -191,5 +193,11 @@ public class Bluetooth extends IOIOService {
 
     public void write(String string) {
         write(string.getBytes());
+    }
+
+    public static void read(){
+        if(information[0]=='S'){
+            input= new String(information);
+        }
     }
 }

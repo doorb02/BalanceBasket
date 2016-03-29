@@ -141,7 +141,9 @@ public class ImuFragment extends Fragment {
                             if (buttonState) {
 //                                lockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendIMUValues + BasketDrawer.mSensorFusion.pitch + ',' + BasketDrawer.mSensorFusion.roll + ";");
-                                mButton.setText(R.string.sendingData);
+                                Bluetooth.read();
+                                mButton.setText(Bluetooth.input);
+                                //mButton.setText(R.string.sendingData);
                             } else {
 //                                unlockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
