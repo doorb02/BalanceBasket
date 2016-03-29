@@ -168,18 +168,21 @@ public class BasketDrawer extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_follow) {
-            // TODO: set follow mode and repeating: send instructions to IOIO
 
             if(follow){
                 item.setIcon(R.drawable.ic_follow_on);
                 follow=false;
+                transaction.add(R.id.basketDrawerFrame, followFragment);
             } else {
                 item.setIcon(R.drawable.ic_portable_wifi_off_24dp);
                 follow=true;
+                transaction.remove(followFragment);
             }
+            transaction.commit();
             return true;
         }
 
