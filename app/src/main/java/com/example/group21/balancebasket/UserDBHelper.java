@@ -6,6 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.group21.balancebasket.UserContract.NewProduct.*;
 
 public class UserDBHelper extends SQLiteOpenHelper {
@@ -23,35 +28,55 @@ public class UserDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate (SQLiteDatabase db){
         db.execSQL(CREATE_QUERY);
-
+        initProductList(db);
     }
+
+    // fill database with initial products
+    private void initProductList(SQLiteDatabase db) {
+        // remove products from the database first
+        db.execSQL("DELETE FROM " + TABLE_NAME);
+
+        // insert products into the database
+        this.addProduct(db, "apple", 0.25);
+        this.addProduct(db, "banana", 0.15);
+        this.addProduct(db, "toothpaste", 1.25);
+        this.addProduct(db, "cookies", 3.75);
+    }
+
+    // insert product into the database
+    public void addProduct (SQLiteDatabase db, String name, double price){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PRODUCT_NAME, name);
+        contentValues.put(PRODUCT_PRICE, price);
+
+        db.insert(TABLE_NAME, null, contentValues);
+    }
+
+    // get all products from the database
+    public static List<Product> getProducts(SQLiteDatabase db){
+        Cursor cursor = db.query(TABLE_NAME, new String[] { COLUMN_ID, PRODUCT_NAME, PRODUCT_PRICE },
+                null, null, null, null, null);
+        List<Product> products = new ArrayList<Product>();
+        while (cursor.moveToNext()) {
+            // get column indices + values of those columns
+            int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+            String name =
+                    cursor.getString(cursor.getColumnIndex(PRODUCT_NAME));
+            String price = cursor.getString(cursor.getColumnIndex(PRODUCT_PRICE));
+            Product product = new Product(name, price);
+            products.add(product);
+            Log.i("LOG_TAG", "ROW " + id + " HAS NAME " + name + " HAS PRICE " + price);
+        }
+        cursor.close();
+
+        return products;
+  }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
-
     }
-
-   public void addProduct (SQLiteDatabase db, String name, int price){
-
-       ContentValues contentValues = new ContentValues();
-      contentValues.put(PRODUCT_NAME, name);
-     contentValues.put(PRODUCT_PRICE, price);
-
-    db.insert(TABLE_NAME, null, contentValues);
-
-   }
-//
- public static Cursor getProducts(SQLiteDatabase db){
-   Cursor cursor = null;
-    String[] projections = {PRODUCT_NAME, PRODUCT_PRICE};
-//
-    db.query(TABLE_NAME, projections, null,null,null,null,null);
-     return cursor;
-//
-  }
-
-
-
 
 }
