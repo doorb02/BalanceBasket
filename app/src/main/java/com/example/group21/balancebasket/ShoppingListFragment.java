@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,10 +32,11 @@ public class ShoppingListFragment extends Fragment {
     private Cursor cursor;
     private ListDataAdapter listDataAdapter;
     private DataProvider dataProvider;
-    private EditText name;
-    private EditText price;
+    private EditText Prname;
+    private EditText Prprice;
     private Button AddButton;
     private Button RemoveButton;
+
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -45,24 +47,40 @@ public class ShoppingListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shopping_list, container, false);
         listView = (ListView) view.findViewById(R.id.ListView);
-        name = (EditText) view.findViewById(R.id.NameEditText);
-        price = (EditText) view.findViewById(R.id.PriceEditText);
+        Prname = (EditText) view.findViewById(R.id.NameEditText);
+        Prprice = (EditText) view.findViewById(R.id.PriceEditText);
         AddButton = (Button) view.findViewById(R.id.AddButton);
         AddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "AddButtonClicked", Toast.LENGTH_LONG).show();
-            }
+                Double price = Double.valueOf(Prprice.getText().toString());
+                String name = Prname.getText().toString();
+                if(name.equals("")){
+                    Toast.makeText(getActivity(), "enter name and price", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
+                else{
+                    Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+                userDbHelper.addProduct(sqLiteDatabase, name, price) ;
+                Prname.setText("");
+                Prprice.setText("");            //TODO Look into invalidate or find other solution to reload the table
+                }}
         });
         RemoveButton = (Button) view.findViewById(R.id.RemoveButton);
+        RemoveButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public  void onClick(View v) {
+                Toast.makeText(getActivity(), "RemoveButtonClicked", Toast.LENGTH_SHORT).show();
+                Prname.setText("");
+                Prprice.setText("");
+            }
+
+        });
         listDataAdapter = new ListDataAdapter(this.getContext(), R.layout.row_layout);
         provideData();
         listView.setAdapter(listDataAdapter);
         return view;
-
-
-
-
     }
 
     // get products from the database and add them to the shopping list
@@ -77,8 +95,7 @@ public class ShoppingListFragment extends Fragment {
         List<Product> products = userDbHelper.getProducts(sqLiteDatabase);
 
         // add products from list to dataprovider
-        for (Product product:products
-                ) {
+        for (Product product:products) {
             dataProvider = new DataProvider(product.getName(), product.getPrice());
             listDataAdapter.add(dataProvider);
         }
