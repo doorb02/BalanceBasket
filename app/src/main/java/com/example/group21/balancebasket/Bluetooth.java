@@ -139,6 +139,7 @@ public class Bluetooth extends IOIOService {
             mState = Bluetooth.STATE_DISCONNECTED;
             toast("IOIO disconnected");
             connection = false;
+            ConnectscreenFragment.checkConnection();
         }
 
         @Override

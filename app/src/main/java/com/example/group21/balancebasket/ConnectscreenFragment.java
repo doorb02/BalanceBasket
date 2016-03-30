@@ -25,7 +25,7 @@ public class ConnectscreenFragment extends Fragment {
     private static Button motionButton;
     private static Button joystickButton;
     private static Button followButton;
-    private Button shoppinglistButton;
+    private static Button shoppinglistButton;
     private static TextView connectionText;
     private static TextView chooseText;
     private static ProgressBar progressBar;
@@ -67,6 +67,14 @@ public class ConnectscreenFragment extends Fragment {
             //TODO: change icon to check
             progressBar.setVisibility(ProgressBar.INVISIBLE);
         }
+        else{
+            motionButton.setEnabled(false);
+            joystickButton.setEnabled(false);
+            followButton.setEnabled(false);
+            connectionText.setText("Establishing Connection...");
+            chooseText.setText(" ");
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+        }
     }
 
     @Override
@@ -90,10 +98,8 @@ public class ConnectscreenFragment extends Fragment {
         makeFollowButtonListener(transaction);
         makeShoppinglistButtonListener(transaction);
 
-        motionButton.setEnabled(false);
-        joystickButton.setEnabled(false);
-        followButton.setEnabled(false);
         shoppinglistButton.setEnabled(true);
+        checkConnection();
 
         return view;
 
