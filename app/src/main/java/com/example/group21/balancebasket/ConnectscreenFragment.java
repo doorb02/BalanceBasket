@@ -22,13 +22,13 @@ import android.widget.TextView;
  */
 public class ConnectscreenFragment extends Fragment {
 
-    private Button motionButton;
-    private Button joystickButton;
-    private Button followButton;
+    private static Button motionButton;
+    private static Button joystickButton;
+    private static Button followButton;
     private Button shoppinglistButton;
-    private TextView connectionText;
-    private TextView chooseText;
-    private ProgressBar progressBar;
+    private static TextView connectionText;
+    private static TextView chooseText;
+    private static ProgressBar progressBar;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,7 +55,7 @@ public class ConnectscreenFragment extends Fragment {
     }
 
     // check for active connection and activate all buttons when connected
-    public void checkConnection() {
+    public static void checkConnection() {
         boolean isConnected = BasketDrawer.isIOIOConnected();
         if(isConnected){
             // TODO: Check with listener
@@ -175,7 +175,6 @@ public class ConnectscreenFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        checkConnection();
     }
 
     /**
