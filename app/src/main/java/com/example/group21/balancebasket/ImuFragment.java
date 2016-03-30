@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +52,8 @@ public class ImuFragment extends Fragment {
     public  float  introllZero;
     public float intPitch;
     public float intRoll;
+
+    DecimalFormat d = (DecimalFormat) NumberFormat.getNumberInstance(Locale.ENGLISH);
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -147,6 +154,9 @@ public class ImuFragment extends Fragment {
 
     @Override
     public void onResume() {
+        d.setRoundingMode(RoundingMode.HALF_UP);
+        d.setMaximumFractionDigits(3);
+        d.setMinimumFractionDigits(3);
         super.onResume();
         getActivity().bindService(new Intent(getActivity(), Bluetooth.class), BasketDrawer.blueConnection, Context.BIND_AUTO_CREATE);
         mRunnable = new Runnable() {
@@ -164,8 +174,8 @@ public class ImuFragment extends Fragment {
         introllZero =intRoll - rollZero;
 
 
-                newPitch = Float.toString(intpitchZero);
-                newRoll = Float.toString(introllZero);
+                newPitch = Float.toString(Float.parseFloat(d.format(intpitchZero)));
+                newRoll = Float.toString(Float.parseFloat(d.format(introllZero)));
 
 
                 mPitchView.setText(newPitch);
