@@ -28,6 +28,7 @@ public class ImuFragment extends Fragment {
     private Button mButton;
     public TextView mPitchView;
     public TextView mRollView;
+    public TextView inputview;
     public TableRow mTableRow;
 
     private Handler mHandler = new Handler();
@@ -98,6 +99,7 @@ public class ImuFragment extends Fragment {
 
         mPitchView = (TextView) view.findViewById(R.id.textView1);
         mRollView = (TextView) view.findViewById(R.id.textView2);
+        inputview = (TextView) view.findViewById(R.id.textView3);
         mButton = (Button) view.findViewById(R.id.activate_button);
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
@@ -169,8 +171,10 @@ public class ImuFragment extends Fragment {
                 mPitchView.setText(newPitch);
                 mRollView.setText(newRoll);
 
-
-
+//                mPitchView.setText(BasketDrawer.mSensorFusion.pitch);
+//                mRollView.setText(BasketDrawer.mSensorFusion.roll);
+                Bluetooth.read();
+                inputview.setText(Bluetooth.input);
 //                mCoefficient.setText(BasketDrawer.mSensorFusion.coefficient);
 
                 counter++;
@@ -190,10 +194,10 @@ public class ImuFragment extends Fragment {
                         if (BasketDrawer.joystickReleased) {
                             if (buttonState) {
 //                                lockRotation();
-                                BasketDrawer.bluetoothService.write(BasketDrawer.sendIMUValues + BasketDrawer.mSensorFusion.pitch + ',' + BasketDrawer.mSensorFusion.roll + ";");
-                                Bluetooth.read();
-                                mButton.setText(Bluetooth.input);
-                                //mButton.setText(R.string.sendingData);
+                                //BasketDrawer.bluetoothService.write(BasketDrawer.sendIMUValues + BasketDrawer.mSensorFusion.pitch + ',' + BasketDrawer.mSensorFusion.roll + ";");
+                                BasketDrawer.bluetoothService.write(BasketDrawer.sendIMUValues + newPitch + ',' + newRoll + ";");
+
+                                mButton.setText(R.string.sendingData);
                             } else {
 //                                unlockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
