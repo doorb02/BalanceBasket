@@ -196,8 +196,9 @@ public class Bluetooth extends IOIOService {
     }
 
     public static void read(){
-        if(information[0]=='S'){
-            input= new String(information);
-        }
+        input= new String(information);
+//       if(information[0]=='S') {
+//           input = new String(information);
+//       }
     }
 }
