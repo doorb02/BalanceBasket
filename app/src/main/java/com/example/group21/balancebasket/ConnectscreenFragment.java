@@ -1,10 +1,14 @@
 package com.example.group21.balancebasket;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +35,7 @@ public class ConnectscreenFragment extends Fragment {
     private static ProgressBar progressBar;
 
     private OnFragmentInteractionListener mListener;
+    private BroadcastReceiver receiver;
 
     public ConnectscreenFragment() {
         // Required empty public constructor
@@ -52,13 +57,21 @@ public class ConnectscreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // receive broadcastmessage
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // handle message about Bluetooth connection state
+                String message = intent.getStringExtra(Bluetooth.CONNECTION_MESSAGE);
+                boolean isConnected = message.contains(Bluetooth.STATE_CONNECTED);
+                changeButtonState(isConnected);
+            }
+        };
     }
 
-    // check for active connection and activate all buttons when connected
-    public static void checkConnection() {
-        boolean isConnected = BasketDrawer.isIOIOConnected();
+    // change button state when bluetooth connection state changes
+    public static void changeButtonState(boolean isConnected) {
         if(isConnected){
-            // TODO: Check with listener
             motionButton.setEnabled(true);
             joystickButton.setEnabled(true);
             followButton.setEnabled(true);
@@ -98,11 +111,17 @@ public class ConnectscreenFragment extends Fragment {
         makeFollowButtonListener(transaction);
         makeShoppinglistButtonListener(transaction);
 
+        // get state of bluetooth connection on start
+        boolean isConnected = false;
+        if (BasketDrawer.isIOIOConnected()) {
+            isConnected = true;
+        }
+
+        // set initial button state
         shoppinglistButton.setEnabled(true);
-        checkConnection();
+        changeButtonState(isConnected);
 
         return view;
-
     }
 
     private void makeShoppinglistButtonListener(final FragmentTransaction transaction) {
@@ -181,6 +200,20 @@ public class ConnectscreenFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().bindService(new Intent(getActivity(), Bluetooth.class), BasketDrawer.blueConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver((receiver),
+                new IntentFilter(Bluetooth.CONNECTION_MESSAGE));
+    }
+
+    @Override
+    public void onStop() {
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
+        super.onStop();
     }
 
     /**

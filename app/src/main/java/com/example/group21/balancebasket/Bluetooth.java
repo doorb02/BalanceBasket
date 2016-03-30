@@ -1,13 +1,11 @@
 package com.example.group21.balancebasket;
 //Todo: test connection boolean
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,12 +31,19 @@ public class Bluetooth extends IOIOService {
 
     private final IBinder blueBinder =  new BlueBinder();
 
+    private LocalBroadcastManager broadcaster;
+
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0; // we're doing nothing
     public static final int STATE_CONNECTING = 1; // now initiating an outgoing connection
-    public static final int STATE_CONNECTED = 2; // now connected to a remote device
-    public static final int STATE_DISCONNECTED = 3; //
+    public static final int STATE_BT_CONNECTED = 2; // now connected to a remote device
+    public static final int STATE_BT_DISCONNECTED = 3; //
     public static boolean connection = false;
+
+    public static final String CONNECTION_STATE = "com.example.group21.balancebasket.Bluetooth.CONNECTION_STATE";
+    public static final String CONNECTION_MESSAGE = "com.example.group21.balancebasket.Bluetooth.CONNECTION_MESSAGE";
+    public static final String STATE_CONNECTED = "com.example.group21.balancebasket.Bluetooth.CONNECTED";
+    public static final String STATE_DISCONNECTED = "com.example.group21.balancebasket.Bluetooth.DISCONNECTED";
 
     /*
         Default constructor
@@ -47,12 +52,11 @@ public class Bluetooth extends IOIOService {
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
+        broadcaster = LocalBroadcastManager.getInstance(this);
         Toast.makeText(this, "Service started", Toast.LENGTH_LONG).show();
-        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (intent != null && intent.getAction() != null
                 && intent.getAction().equals("stop")) {
             // User clicked the notification. Need to stop the service.
-            nm.cancel(0);
             stopSelf();
         } else {
             // Service starting. Create a notification.
@@ -66,6 +70,15 @@ public class Bluetooth extends IOIOService {
 //            notification.flags |= Notification.FLAG_ONGOING_EVENT;
 //            nm.notify(0, notification);
         }
+    }
+
+    // send a message with the connection status
+    public void sendResult(String message) {
+        Intent intent = new Intent(CONNECTION_STATE);
+        if(message != null) {
+            intent.putExtra(CONNECTION_MESSAGE, message);
+        }
+        broadcaster.sendBroadcast(intent);
     }
 
     @Nullable
@@ -107,11 +120,11 @@ public class Bluetooth extends IOIOService {
             in = uart.getInputStream();
             out = uart.getOutputStream();
 
-            mState = STATE_CONNECTED;
+            mState = STATE_BT_CONNECTED;
+            sendResult(STATE_CONNECTED);
             showVersions(ioio_, "IOIO connected!");
             led_ = ioio_.openDigitalOutput(0, true);
             connection = true;
-            ConnectscreenFragment.checkConnection();
         }
 
         /**
@@ -136,10 +149,10 @@ public class Bluetooth extends IOIOService {
 
         @Override
         public void disconnected() {
-            mState = Bluetooth.STATE_DISCONNECTED;
+            mState = Bluetooth.STATE_BT_DISCONNECTED;
+            sendResult(STATE_DISCONNECTED);
             toast("IOIO disconnected");
             connection = false;
-            ConnectscreenFragment.checkConnection();
         }
 
         @Override
