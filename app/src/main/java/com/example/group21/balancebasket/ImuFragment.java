@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,6 +34,18 @@ public class ImuFragment extends Fragment {
     private Runnable mRunnable;
     private int counter = 0;
     boolean buttonState;
+
+
+    public float pitchZero = 0;
+    public float rollZero = 0;
+    public String newPitch;
+    public String newRoll;
+
+
+    public  float  intpitchZero;
+    public  float  introllZero;
+    public float intPitch;
+    public float intRoll;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,6 +112,27 @@ public class ImuFragment extends Fragment {
 
         BasketDrawer.buttonState = false;
 
+
+
+        mButton.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN ) {
+                    pitchZero = Float.parseFloat(BasketDrawer.mSensorFusion.pitch);
+                    rollZero = Float.parseFloat(BasketDrawer.mSensorFusion.roll);
+                  //   pitchZero = BasketDrawer.mSensorFusion.pitch;
+                  //    rollZero = BasketDrawer.mSensorFusion.roll;
+
+                }
+
+                return false;
+            }
+        });
+
+
+
+
         return view;
     }
 
@@ -116,11 +150,27 @@ public class ImuFragment extends Fragment {
         mRunnable = new Runnable() {
             @Override
             public void run() {
+
                 mHandler.postDelayed(this, 50); // Update IMU data every 50ms
                 if (BasketDrawer.mSensorFusion == null)
                     return;
-                mPitchView.setText(BasketDrawer.mSensorFusion.pitch);
-                mRollView.setText(BasketDrawer.mSensorFusion.roll);
+
+
+        intPitch = Float.parseFloat(BasketDrawer.mSensorFusion.pitch) ;
+        intRoll =  Float.parseFloat(BasketDrawer.mSensorFusion.roll);
+        intpitchZero =intPitch - pitchZero;
+        introllZero =intRoll - rollZero;
+
+
+                newPitch = Float.toString(intpitchZero);
+                newRoll = Float.toString(introllZero);
+
+
+                mPitchView.setText(newPitch);
+                mRollView.setText(newRoll);
+
+
+
 //                mCoefficient.setText(BasketDrawer.mSensorFusion.coefficient);
 
                 counter++;
