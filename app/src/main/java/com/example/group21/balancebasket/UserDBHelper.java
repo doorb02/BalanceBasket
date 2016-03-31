@@ -41,6 +41,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         this.addProduct(db, "banana", 0.15);
         this.addProduct(db, "toothpaste", 1.25);
         this.addProduct(db, "cookies", 3.75);
+        this.addProduct(db, "bullshit", 2.50);
     }
 
     // insert product into the database

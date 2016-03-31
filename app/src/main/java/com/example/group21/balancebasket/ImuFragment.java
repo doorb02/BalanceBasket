@@ -192,7 +192,7 @@ public class ImuFragment extends Fragment {
                     counter = 0;
                     if (BasketDrawer.bluetoothService == null)
                         return;
-                    if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_CONNECTED){
+                    if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_BT_CONNECTED){
                         buttonState = mButton.isPressed();
                         BasketDrawer.buttonState = buttonState;
 
