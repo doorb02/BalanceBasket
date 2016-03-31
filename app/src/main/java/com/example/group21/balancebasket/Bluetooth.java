@@ -111,7 +111,7 @@ public class Bluetooth extends IOIOService {
             showVersions(ioio_, "IOIO connected!");
             led_ = ioio_.openDigitalOutput(0, true);
             connection = true;
-            ConnectscreenFragment.checkConnection();
+            //ConnectscreenFragment.checkConnection();
         }
 
         /**
@@ -139,7 +139,7 @@ public class Bluetooth extends IOIOService {
             mState = Bluetooth.STATE_DISCONNECTED;
             toast("IOIO disconnected");
             connection = false;
-            ConnectscreenFragment.checkConnection();
+            //ConnectscreenFragment.checkConnection();
         }
 
         @Override
