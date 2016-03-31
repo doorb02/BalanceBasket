@@ -28,6 +28,7 @@ public class Bluetooth extends IOIOService {
     private byte[] coordinates = new byte[1];
     private static byte[] information = new byte[1];
     public static String input;
+    public static String[] dataInput = new String[30];
 
     private final IBinder blueBinder =  new BlueBinder();
 
@@ -211,9 +212,24 @@ public class Bluetooth extends IOIOService {
     }
 
     public static void read(){
-        input= new String(information);
-//       if(information[0]=='S') {
-//           input = new String(information);
-//       }
+       input= String.valueOf(0);
+        if(information[0]=='S') {
+           int c = 1;
+           while(true){
+               if (information[c] == ';') // Keep reading until it reads a semicolon
+                   break;
+               dataInput[c]=new String(information);
+               if (information[c] == -1) // Error while reading the string
+                   return;
+               ++c;
+           }
+           setString(dataInput,c);
+       }
+    }
+
+    private static void setString(String[] dataInput,int c) {
+        for(int n =1; n<c; n++){
+            input = input + dataInput[n];
+        }
     }
 }
