@@ -24,10 +24,10 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/NameEditText"
-        android:layout_below="@+id/ListView"
-        android:layout_alignStart="@+id/ListView"
         android:hint="Name"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/TotalPriceView"
+        android:layout_alignStart="@+id/AddButton" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -46,10 +46,9 @@
         android:layout_height="wrap_content"
         android:text="Add"
         android:id="@+id/AddButton"
-        android:layout_below="@+id/NameEditText"
-        android:layout_alignParentStart="true"
         android:onClick="OnAddClicked"
-        android:layout_marginTop="20dp" />
+        android:layout_alignTop="@+id/RemoveButton"
+        android:layout_alignStart="@+id/ListView" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -61,6 +60,17 @@
         android:layout_below="@+id/PriceEditText"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/TotalPriceView"
+        android:password="true"
+        android:hint="Total Price"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ListView"
+        android:layout_alignEnd="@+id/PriceEditText"
+        android:layout_marginRight="10dp" />
 
 
 </RelativeLayout>
