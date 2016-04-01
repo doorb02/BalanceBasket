@@ -53,7 +53,6 @@ public class Bluetooth extends IOIOService {
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
-        broadcaster = LocalBroadcastManager.getInstance(this);
         Toast.makeText(this, "Service started", Toast.LENGTH_LONG).show();
         if (intent != null && intent.getAction() != null
                 && intent.getAction().equals("stop")) {
@@ -94,6 +93,12 @@ public class Bluetooth extends IOIOService {
         Bluetooth getBluetooth() {
             return Bluetooth.this;
         }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        broadcaster = LocalBroadcastManager.getInstance(this);
     }
 
     /**
