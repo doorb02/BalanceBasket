@@ -59,11 +59,10 @@ public class UserDBHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + PRODUCT_NAME + "=\"" + name + "\";");
         }
 
-    public void totalPrice (String total){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("SELECT SUM(" + PRODUCT_PRICE + ") AS " + total + " FROM " + TABLE_NAME);
-
+    public void calculateTotalPrice(SQLiteDatabase db){
+        Cursor c = db.rawQuery("SELECT SUM(PRODUCT_PRICE) AS total FROM " + TABLE_NAME, null);
     }
+
 
     // get all products from the database
     public static List<Product> getProducts(SQLiteDatabase db){
@@ -88,6 +87,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
+
     }
 
 }

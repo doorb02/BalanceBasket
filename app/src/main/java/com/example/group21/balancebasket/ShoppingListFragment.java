@@ -58,15 +58,16 @@ public class ShoppingListFragment extends Fragment {
             public void onClick(View v) {
                 Double price = Double.valueOf(Prprice.getText().toString());
                 String name = Prname.getText().toString();
-                if((name.length() == 0)){
+                if((name.length() == 0)){ //TODO this should also happen when no price is entered or when both fields are empty
                     Toast.makeText(getActivity(), "Nothing to add", Toast.LENGTH_SHORT).show();
                 }
 
                 else{
                     Toast.makeText(getActivity(), name + " added to shoppinglist", Toast.LENGTH_SHORT).show();
-                userDbHelper.addProduct(sqLiteDatabase, name, price) ;
-                Prname.setText("");
-                Prprice.setText("");            //TODO Look into invalidate or find other solution to reload the table
+                userDbHelper.addProduct(sqLiteDatabase, name, price) ;  //TODO Look into invalidate or find other solution to reload the table
+                    Prname.setText("");
+                Prprice.setText("");
+             //   userDbHelper.calculateTotalPrice(); //TODO Get the program to print the total price in the textView TotalPrice
                 }}
         });
         RemoveButton = (Button) view.findViewById(R.id.RemoveButton);
@@ -82,8 +83,9 @@ public class ShoppingListFragment extends Fragment {
                 else{
                 Toast.makeText(getActivity(), name + " removed from shoppinglist", Toast.LENGTH_SHORT).show();
                 userDbHelper.removeProduct(name);
-                Prname.setText("");
+                    Prname.setText("");
                 Prprice.setText("");
+             //   userDbHelper.calculateTotalPrice();
             }}
 
         });
@@ -127,9 +129,5 @@ public class ShoppingListFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-//    public void CalculateTotalPrice () {
-//        String dbString = userDbHelper.totalPrice.databaseToString();
-//        TotalPrice.setText(dbString);
-//    }
 
 }
