@@ -207,7 +207,7 @@ public class ConnectscreenFragment extends Fragment {
     public void onStart() {
         super.onStart();
         LocalBroadcastManager.getInstance(getContext()).registerReceiver((receiver),
-                new IntentFilter(Bluetooth.CONNECTION_MESSAGE));
+                new IntentFilter(Bluetooth.CONNECTION_STATE));
     }
 
     @Override
