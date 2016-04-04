@@ -106,7 +106,7 @@ public class ImuFragment extends Fragment {
 
         mPitchView = (TextView) view.findViewById(R.id.textView1);
         mRollView = (TextView) view.findViewById(R.id.textView2);
-        inputview = (TextView) view.findViewById(R.id.textView3);
+//        inputview = (TextView) view.findViewById(R.id.textView3);
         mButton = (Button) view.findViewById(R.id.activate_button);
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
@@ -180,8 +180,8 @@ public class ImuFragment extends Fragment {
 
                 mPitchView.setText(newPitch);
                 mRollView.setText(newRoll);
-                Bluetooth.read();
-                inputview.setText(Bluetooth.input);
+//                Bluetooth.read();
+//                inputview.setText(Bluetooth.input);
 
 //                mPitchView.setText(BasketDrawer.mSensorFusion.pitch);
 //                mRollView.setText(BasketDrawer.mSensorFusion.roll);
