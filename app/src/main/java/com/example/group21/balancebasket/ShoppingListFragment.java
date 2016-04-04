@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class ShoppingListFragment extends Fragment {
     private EditText Prprice;
     private Button AddButton;
     private Button RemoveButton;
+    private TextView TotalPrice;
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -46,6 +48,7 @@ public class ShoppingListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shopping_list, container, false);
         listView = (ListView) view.findViewById(R.id.ListView);
+        TotalPrice = (TextView) view.findViewById(R.id.TotalPriceView);
         Prname = (EditText) view.findViewById(R.id.NameEditText);
         Prprice = (EditText) view.findViewById(R.id.PriceEditText);
         AddButton = (Button) view.findViewById(R.id.AddButton);
@@ -54,26 +57,35 @@ public class ShoppingListFragment extends Fragment {
             public void onClick(View v) {
                 Double price = Double.valueOf(Prprice.getText().toString());
                 String name = Prname.getText().toString();
-                if(name.equals("")){
-                    Toast.makeText(getActivity(), "enter name and price", Toast.LENGTH_SHORT).show();
-                    return;
-
+                if((name.length() == 0)){ //TODO this should also happen when no price is entered or when both fields are empty
+                    Toast.makeText(getActivity(), "Nothing to add", Toast.LENGTH_SHORT).show();
                 }
+
                 else{
-                    Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
-                userDbHelper.addProduct(sqLiteDatabase, name, price) ;
-                Prname.setText("");
-                Prprice.setText("");            //TODO Look into invalidate or find other solution to reload the table
+                    Toast.makeText(getActivity(), name + " added to shoppinglist", Toast.LENGTH_SHORT).show();
+                userDbHelper.addProduct(sqLiteDatabase, name, price) ;  //TODO Look into invalidate or find other solution to reload the table
+                    Prname.setText("");
+                Prprice.setText("");
+             //   userDbHelper.calculateTotalPrice(); //TODO Get the program to print the total price in the textView TotalPrice
                 }}
         });
         RemoveButton = (Button) view.findViewById(R.id.RemoveButton);
         RemoveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v) {
-                Toast.makeText(getActivity(), "RemoveButtonClicked", Toast.LENGTH_SHORT).show();
-                Prname.setText("");
+                String name = Prname.getText().toString();
+
+                if((name.length() == 0)){
+                    Toast.makeText(getActivity(), "Nothing to remove", Toast.LENGTH_SHORT).show();
+                }
+
+                else{
+                Toast.makeText(getActivity(), name + " removed from shoppinglist", Toast.LENGTH_SHORT).show();
+                userDbHelper.removeProduct(name);
+                    Prname.setText("");
                 Prprice.setText("");
-            }
+             //   userDbHelper.calculateTotalPrice();
+            }}
 
         });
         listDataAdapter = new ListDataAdapter(this.getContext(), R.layout.row_layout);

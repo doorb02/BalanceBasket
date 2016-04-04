@@ -50,9 +50,19 @@ public class UserDBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(PRODUCT_NAME, name);
         contentValues.put(PRODUCT_PRICE, price);
-
         db.insert(TABLE_NAME, null, contentValues);
+        db.close();
     }
+
+    public void removeProduct (String name){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + PRODUCT_NAME + "=\"" + name + "\";");
+        }
+
+    public void calculateTotalPrice(SQLiteDatabase db){
+        Cursor c = db.rawQuery("SELECT SUM(PRODUCT_PRICE) AS total FROM " + TABLE_NAME, null);
+    }
+
 
     // get all products from the database
     public static List<Product> getProducts(SQLiteDatabase db){
@@ -62,8 +72,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             // get column indices + values of those columns
             int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-            String name =
-                    cursor.getString(cursor.getColumnIndex(PRODUCT_NAME));
+            String name = cursor.getString(cursor.getColumnIndex(PRODUCT_NAME));
             String price = cursor.getString(cursor.getColumnIndex(PRODUCT_PRICE));
             Product product = new Product(name, price);
             products.add(product);
@@ -78,6 +87,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
+
     }
 
 }
