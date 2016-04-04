@@ -59,8 +59,16 @@ public class UserDBHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + PRODUCT_NAME + "=\"" + name + "\";");
         }
 
-    public void calculateTotalPrice(SQLiteDatabase db){
-        Cursor c = db.rawQuery("SELECT SUM(PRODUCT_PRICE) AS total FROM " + TABLE_NAME, null);
+    public String calculateTotalPrice(SQLiteDatabase db){
+        Cursor c = db.rawQuery("SELECT SUM(PRODUCT_PRICE) AS TOTAL FROM " + TABLE_NAME + ";", null);
+        String total = "";
+        int iPrice = c.getColumnIndex(PRODUCT_PRICE);
+
+        for(c.moveToFirst(); !c.isAfterLast();c.moveToNext()){
+            total = total + c.getString(iPrice);
+        }
+
+        return total;
     }
 
 

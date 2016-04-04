@@ -66,7 +66,11 @@ public class ShoppingListFragment extends Fragment {
                 userDbHelper.addProduct(sqLiteDatabase, name, price) ;  //TODO Look into invalidate or find other solution to reload the table
                     Prname.setText("");
                 Prprice.setText("");
-             //   userDbHelper.calculateTotalPrice(); //TODO Get the program to print the total price in the textView TotalPrice
+//              DBHelper = new UserDBHelper(getContext());
+//              db = DBHelper.getWritableDatabase();
+//
+//              String totalp = userDbHelper.calculateTotalPrice(db).total.getString;
+//              TotalPrice.setText(totalP); //TODO Get the program to print the total price in the textView TotalPrice
                 }}
         });
         RemoveButton = (Button) view.findViewById(R.id.RemoveButton);
