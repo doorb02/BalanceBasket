@@ -48,7 +48,9 @@
         android:id="@+id/AddButton"
         android:onClick="OnAddClicked"
         android:layout_alignTop="@+id/RemoveButton"
-        android:layout_alignStart="@+id/ListView" />
+        android:layout_alignStart="@+id/ListView"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -59,7 +61,9 @@
         android:id="@+id/RemoveButton"
         android:layout_below="@+id/PriceEditText"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"/>
 
     <TextView
         android:layout_width="100dp"

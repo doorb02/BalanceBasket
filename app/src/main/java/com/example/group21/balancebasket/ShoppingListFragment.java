@@ -64,13 +64,12 @@ public class ShoppingListFragment extends Fragment {
                 else{
                     Toast.makeText(getActivity(), name + " added to shoppinglist", Toast.LENGTH_SHORT).show();
                 userDbHelper.addProduct(sqLiteDatabase, name, price) ;  //TODO Look into invalidate or find other solution to reload the table
+                listDataAdapter.clear();
+
                     Prname.setText("");
                 Prprice.setText("");
-//              DBHelper = new UserDBHelper(getContext());
-//              db = DBHelper.getWritableDatabase();
-//
-//              String totalp = userDbHelper.calculateTotalPrice(db).total.getString;
-//              TotalPrice.setText(totalP); //TODO Get the program to print the total price in the textView TotalPrice
+                    provideData();
+//              //TODO Get the program to print the total price in the textView TotalPrice
                 }}
         });
         RemoveButton = (Button) view.findViewById(R.id.RemoveButton);
@@ -86,8 +85,10 @@ public class ShoppingListFragment extends Fragment {
                 else{
                 Toast.makeText(getActivity(), name + " removed from shoppinglist", Toast.LENGTH_SHORT).show();
                 userDbHelper.removeProduct(name);
+                    listDataAdapter.clear();
                     Prname.setText("");
                 Prprice.setText("");
+                    provideData();
              //   userDbHelper.calculateTotalPrice();
             }}
 
