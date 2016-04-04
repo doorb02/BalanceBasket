@@ -130,6 +130,8 @@ public class ConnectscreenFragment extends Fragment {
             public void onClick(View v) {
                 ShoppingListFragment shoppinglistFragment = new ShoppingListFragment();
                 shoppinglistFragment.setArguments(getActivity().getIntent().getExtras());
+                FollowFragment followFragment = new FollowFragment();
+                followFragment.setArguments(getActivity().getIntent().getExtras());
                 transaction.replace(R.id.basketDrawerFrame, shoppinglistFragment);
                 transaction.commit();
             }

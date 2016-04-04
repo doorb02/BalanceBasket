@@ -115,10 +115,12 @@ public class FollowFragment extends Fragment {
                             if (toggleButtonState) {
 //                                lockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendFollow + ";");
+                                BasketDrawer.follow = true;
                                 fButton.setText(R.string.followModeOn);
                             } else {
 //                                unlockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
+                                BasketDrawer.follow = false;
                                 fButton.setText(R.string.followModeOff);
                             }
                         }

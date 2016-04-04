@@ -180,11 +180,11 @@ public class ImuFragment extends Fragment {
 
                 mPitchView.setText(newPitch);
                 mRollView.setText(newRoll);
+                Bluetooth.read();
+                inputview.setText(Bluetooth.input);
 
 //                mPitchView.setText(BasketDrawer.mSensorFusion.pitch);
 //                mRollView.setText(BasketDrawer.mSensorFusion.roll);
-                Bluetooth.read();
-                inputview.setText(Bluetooth.input);
 //                mCoefficient.setText(BasketDrawer.mSensorFusion.coefficient);
 
                 counter++;

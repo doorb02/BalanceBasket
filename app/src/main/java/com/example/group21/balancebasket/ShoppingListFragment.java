@@ -37,7 +37,6 @@ public class ShoppingListFragment extends Fragment {
     private Button AddButton;
     private Button RemoveButton;
 
-
     public ShoppingListFragment() {
         // Required empty public constructor
     }

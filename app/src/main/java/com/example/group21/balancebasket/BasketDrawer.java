@@ -39,7 +39,7 @@ public class BasketDrawer extends AppCompatActivity
     private static Context context;
 
     public static boolean joystickReleased = true;
-    private static boolean follow =false;
+    public static boolean follow =false;
 
     public static Bluetooth bluetoothService;
 
@@ -148,13 +148,17 @@ public class BasketDrawer extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            transaction.replace(R.id.basketDrawerFrame, connectscreenFragment);
+            transaction.commit();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -173,13 +177,13 @@ public class BasketDrawer extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_follow) {
 
-            if(follow){
+            if(!follow){
                 item.setIcon(R.drawable.ic_follow_on);
-                follow=false;
+                follow=true;
                 transaction.add(R.id.basketDrawerFrame, followFragment);
             } else {
                 item.setIcon(R.drawable.ic_portable_wifi_off_24dp);
-                follow=true;
+                follow=false;
                 transaction.remove(followFragment);
             }
             transaction.commit();
