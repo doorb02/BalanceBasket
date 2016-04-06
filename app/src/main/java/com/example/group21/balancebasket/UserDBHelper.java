@@ -53,9 +53,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, contentValues);
     }
 
-    public void removeProduct (String name){
+    public boolean removeProduct (String name){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + PRODUCT_NAME + "=\"" + name + "\";");
+        String[] whereArgs = new String[] {name};
+        int result = db.delete(TABLE_NAME, PRODUCT_NAME + "= ? ", whereArgs);
+        // if product is deleted result > 0 and this method returns true
+        return result > 0;
         }
 
     public String calculateTotalPrice(SQLiteDatabase db){
