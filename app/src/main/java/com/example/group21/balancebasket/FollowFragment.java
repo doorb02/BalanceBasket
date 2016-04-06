@@ -55,15 +55,9 @@ public class FollowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // return inflater.inflate(R.layout.fragment_follow, container, false);
         View view = inflater.inflate(R.layout.fragment_follow, container, false);
 
         fButton = (ToggleButton)view.findViewById(R.id.follow_button);
-
-//        fButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//            }
-//        });
 
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
@@ -75,9 +69,6 @@ public class FollowFragment extends Fragment {
 //                    mTableRow.setVisibility(View.GONE); // If not then hide the tablerow
             }
         }, 100); // Wait 100ms before running the code
-
-        //BasketDrawer.buttonState = false;
-        //toggleButtonState = false;
 
         return view;
     }
@@ -105,13 +96,6 @@ public class FollowFragment extends Fragment {
                         return;
                     if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_BT_CONNECTED){
                         toggleButtonState = fButton.isChecked();
-//                        BasketDrawer.buttonState = buttonState;
-
-//                        if (BasketDrawer.joystickReleased || getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) // Check if joystick is released or we are not in landscape mode
-//                            ViewPager.setPagingEnabled(!buttonState); // Set the ViewPager according to the button
-//                        else
-//                            CustomViewPager.setPagingEnabled(false);
-
                         if (BasketDrawer.joystickReleased) {
                             if (toggleButtonState) {
 //                                lockRotation();
@@ -130,8 +114,6 @@ public class FollowFragment extends Fragment {
                     } else {
                         fButton.setText(R.string.connectFirst);
                         fButton.setBackgroundColor(Color.parseColor("#FF3D00"));
-//                        if (BasketDrawer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT && BasketDrawer.joystickReleased)
-//                            CustomViewPager.setPagingEnabled(true);
                     }
                 }
             }
