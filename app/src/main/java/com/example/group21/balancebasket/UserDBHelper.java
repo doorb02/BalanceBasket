@@ -51,7 +51,6 @@ public class UserDBHelper extends SQLiteOpenHelper {
         contentValues.put(PRODUCT_NAME, name);
         contentValues.put(PRODUCT_PRICE, price);
         db.insert(TABLE_NAME, null, contentValues);
-        db.close();
     }
 
     public void removeProduct (String name){

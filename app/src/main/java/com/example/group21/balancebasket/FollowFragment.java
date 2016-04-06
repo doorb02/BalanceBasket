@@ -1,6 +1,7 @@
 package com.example.group21.balancebasket;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
@@ -117,15 +118,18 @@ public class FollowFragment extends Fragment {
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendFollow + ";");
                                 BasketDrawer.follow = true;
                                 fButton.setText(R.string.followModeOn);
+                                fButton.setBackgroundColor(Color.parseColor("#009688"));
                             } else {
 //                                unlockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
                                 BasketDrawer.follow = false;
                                 fButton.setText(R.string.followModeOff);
+                                fButton.setBackgroundColor(Color.parseColor("#B2DFDB"));
                             }
                         }
                     } else {
                         fButton.setText(R.string.connectFirst);
+                        fButton.setBackgroundColor(Color.parseColor("#FF3D00"));
 //                        if (BasketDrawer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT && BasketDrawer.joystickReleased)
 //                            CustomViewPager.setPagingEnabled(true);
                     }

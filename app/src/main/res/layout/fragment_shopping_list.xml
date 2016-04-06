@@ -11,7 +11,6 @@
     tools:context="com.example.group21.balancebasket.BasketDrawer"
     tools:showIn="@layout/app_bar_basket_drawer">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +20,5 @@
         android:text="@string/shopping_list_fragment_title" />
 
     <include layout="@layout/content_data_list" />
-
 
 </FrameLayout>

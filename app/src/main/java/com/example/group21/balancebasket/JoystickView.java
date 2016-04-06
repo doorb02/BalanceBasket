@@ -1,9 +1,5 @@
 package com.example.group21.balancebasket;
 
-/**
- * Created by Rens on 13-3-2016.
- */
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,8 +11,8 @@ import android.view.View;
 public class JoystickView extends View {
     private OnJoystickChangeListener listener;
 
-    final int holo_blue_dark = Color.parseColor("#A1887F");
-    final int buttonGray = Color.parseColor("#90A4AE");
+    final int holo_blue_dark = Color.parseColor("#00796B");
+    final int buttonGray = Color.parseColor("#009688");
 
     private int buttonColor = buttonGray;
 

@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#31c20a</color>
-    <color name="colorPrimaryDark">#118c08</color>
-    <color name="colorAccent">#4a06a3</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#FF3D00</color>
 
     <color name="black_overlay">#95000000</color>
-    <color name="material_deep_teal_500">#009688</color>
-    <color name="material_deep_teal_200">#004d40</color>
-    <color name="material_grey_600">#dd2c00</color>
-    <color name="primary_material_light_1">#009688</color>
-    <color name="primary_material_light_2">#009688</color>
-    <color name="material_blue_grey_800">#90a4ae</color>
-    <color name="primary_material_light_3">#009688</color>
+    <color name="primary_text_material_light">#212121</color>
+    <color name="primary_text_material_dark">#ffffff</color>
+    <color name="secondary_text_material_light">#727272</color>
+    <color name="secondary_text_material_dark">#212121</color>
+    <color name="colorBackground">#ffffff</color>
+    <color name="primary_material_light">#B2DFDB</color>
+    <color name="primary_dark_material_light">#00796b</color>
+    <color name="accent_material_light">#FF3D00</color>
+    <color name="background_material_light">#fafafa</color>
+    <color name="foreground_material_light">#000000</color>
+    <color name="black">#000000</color>
+    <color name="enabled_color">#F7FE2E</color>
+    <color name="disabled_color">#000000</color>
 </resources>

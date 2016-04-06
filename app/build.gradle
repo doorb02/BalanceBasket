@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.group21.balancebasket"
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -32,9 +32,3 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile 'com.google.android.gms:play-services:8.4.0'
 }
-
-/*
-repositories {
-    mavenCentral()
-}
-*/
