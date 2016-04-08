@@ -17,7 +17,4 @@
         android:gravity="center"
         android:layout_marginStart="40dp"/>
 
-
-
-
 </LinearLayout>
