@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,8 +36,10 @@ public class ConnectscreenFragment extends Fragment {
     private static Button followButton;
     private static Button shoppinglistButton;
     private static TextView connectionText;
-    private static TextView chooseText;
     private static ProgressBar progressBar;
+    private static LinearLayout connectionlayout;
+//    private LinearLayout connection_status;
+
 
     private OnFragmentInteractionListener mListener;
     private BroadcastReceiver receiver;
@@ -57,6 +64,7 @@ public class ConnectscreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // receive broadcastmessage
         receiver = new BroadcastReceiver() {
             @Override
@@ -70,23 +78,39 @@ public class ConnectscreenFragment extends Fragment {
     }
 
     // change button state when bluetooth connection state changes
-    public static void changeButtonState(boolean isConnected) {
+    public void changeButtonState(boolean isConnected) {
         if(isConnected){
             motionButton.setEnabled(true);
             joystickButton.setEnabled(true);
             followButton.setEnabled(true);
+
+
             connectionText.setText("Connection Established!");
-            chooseText.setText("Please choose a method of control:");
             //TODO: change icon to check
             progressBar.setVisibility(ProgressBar.INVISIBLE);
+
+            connectionlayout.setBackgroundResource(R.drawable.connected);
+
         }
         else{
             motionButton.setEnabled(false);
             joystickButton.setEnabled(false);
             followButton.setEnabled(false);
+
+            motionButton.setBackgroundColor(Color.parseColor("#ebebeb"));
+            joystickButton.setBackgroundColor(Color.parseColor("#ebebeb"));
+            followButton.setBackgroundColor(Color.parseColor("#ebebeb"));
+
+            motionButton.setTextColor(Color.parseColor("#969696"));
+            joystickButton.setTextColor(Color.parseColor("#969696"));
+            followButton.setTextColor(Color.parseColor("#969696"));
+
             connectionText.setText("Establishing Connection...");
-            chooseText.setText(" ");
             progressBar.setVisibility(ProgressBar.VISIBLE);
+            connectionlayout.setBackgroundResource(R.drawable.not_connected);
+//            LinearLayout.setBackgroundResource(R.drawable.connected);
+
+
         }
     }
 
@@ -102,7 +126,9 @@ public class ConnectscreenFragment extends Fragment {
         shoppinglistButton = (Button) view.findViewById(R.id.List_Button);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         connectionText = (TextView) view.findViewById(R.id.Connection_text);
-        chooseText = (TextView) view.findViewById(R.id.choose_Text);
+        connectionlayout = (LinearLayout) view.findViewById(R.id.connection_status);
+//        chooseText = (TextView) view.findViewById(R.id.choose_Text);
+//        connection = (LinearLayout) view.findViewById(R.id.connection_status);
 
         // initiate button listeners
         final FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
