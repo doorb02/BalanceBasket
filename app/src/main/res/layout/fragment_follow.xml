@@ -12,6 +12,7 @@
         android:textOff=""
         android:id="@+id/follow_button"
         android:layout_gravity="bottom"
+        android:background="@drawable/toggle_button_background"
         />
 
 </FrameLayout>
