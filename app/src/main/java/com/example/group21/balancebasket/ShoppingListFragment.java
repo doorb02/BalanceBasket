@@ -55,24 +55,36 @@ public class ShoppingListFragment extends Fragment {
         AddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double price = Double.valueOf(Prprice.getText().toString());
-                String name = Prname.getText().toString();
-                if((name.length() == 0)){ //TODO this should also happen when no price is entered or when both fields are empty
+                String name = "";
+                Double price = 0.0;
+                // secure code against invalid input
+                try{
+                    name = Prname.getText().toString();
+                    price = Double.valueOf(Prprice.getText().toString());
+                } catch(Exception e) {
                     Toast.makeText(getActivity(), "Nothing to add", Toast.LENGTH_SHORT).show();
                 }
 
-                else{
-                    Toast.makeText(getActivity(), name + " added to shoppinglist", Toast.LENGTH_SHORT).show();
-                userDbHelper.addProduct(sqLiteDatabase, name, price) ;  //TODO Look into invalidate or find other solution to reload the table
+                // add product only when name and price are entered
+                if((name == "" || price == 0.0 )){
+                    Toast.makeText(getActivity(), "Nothing to add", Toast.LENGTH_SHORT).show();
+                }else {
+                    userDbHelper.addProduct(sqLiteDatabase, name, price) ;
+                    // refresh values in shopping list table
+                    provideData();
+                    // clear input fields
                     Prname.setText("");
-                Prprice.setText("");
-//              DBHelper = new UserDBHelper(getContext());
-//              db = DBHelper.getWritableDatabase();
-//
-//              String totalp = userDbHelper.calculateTotalPrice(db).total.getString;
-//              TotalPrice.setText(totalP); //TODO Get the program to print the total price in the textView TotalPrice
-                }}
+                    Prprice.setText("");
+    //              DBHelper = new UserDBHelper(getContext());
+    //              db = DBHelper.getWritableDatabase();
+    //
+    //              String totalp = userDbHelper.calculateTotalPrice(db).total.getString;
+    //              TotalPrice.setText(totalP); //TODO Get the program to print the total price in the textView TotalPrice
+                    Toast.makeText(getActivity(), name + " added to shoppinglist", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
+
         RemoveButton = (Button) view.findViewById(R.id.RemoveButton);
         RemoveButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -84,30 +96,39 @@ public class ShoppingListFragment extends Fragment {
                 }
 
                 else{
-                Toast.makeText(getActivity(), name + " removed from shoppinglist", Toast.LENGTH_SHORT).show();
-                userDbHelper.removeProduct(name);
-                    Prname.setText("");
+                    boolean isProductRemoved = userDbHelper.removeProduct(name);
+                    if(isProductRemoved) {
+                        provideData();
+                        Toast.makeText(getActivity(), name + " removed from shoppinglist", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), name + " is not removed from shoppinglist", Toast.LENGTH_SHORT).show();
+                    }
+
+                Prname.setText("");
                 Prprice.setText("");
              //   userDbHelper.calculateTotalPrice();
             }}
 
         });
-        listDataAdapter = new ListDataAdapter(this.getContext(), R.layout.row_layout);
         provideData();
-        listView.setAdapter(listDataAdapter);
         return view;
     }
 
     // get products from the database and add them to the shopping list
     private void provideData() {
-        dataProvider = new DataProvider();
-        // init SQLiteOpenHelper
-        userDbHelper = new UserDBHelper(this.getContext());
-        // get a readable and writable database
-        sqLiteDatabase = userDbHelper.getWritableDatabase();
-
+        if(dataProvider == null || userDbHelper == null || sqLiteDatabase == null) {
+            dataProvider = new DataProvider();
+            // init SQLiteOpenHelper
+            userDbHelper = new UserDBHelper(this.getContext());
+            // get a readable and writable database
+            sqLiteDatabase = userDbHelper.getWritableDatabase();
+        }
         // get products from the database
         List<Product> products = userDbHelper.getProducts(sqLiteDatabase);
+
+        // empty listDataAdapter before filling adapter with new values from database
+        listDataAdapter = new ListDataAdapter(this.getContext(), R.layout.row_layout);
+        listView.setAdapter(listDataAdapter);
 
         // add products from list to dataprovider
         for (Product product:products) {
