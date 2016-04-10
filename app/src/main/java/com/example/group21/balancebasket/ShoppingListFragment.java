@@ -33,11 +33,11 @@ public class ShoppingListFragment extends Fragment {
     private Cursor cursor;
     private ListDataAdapter listDataAdapter;
     private DataProvider dataProvider;
-    private EditText Prname;
-    private EditText Prprice;
-    private Button AddButton;
-    private Button RemoveButton;
-    private TextView TotalPrice;
+    private EditText productName;
+    private EditText productPrice;
+    private Button addProductButton;
+    private Button removeProductButton;
+    private TextView totalPrice;
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -48,19 +48,19 @@ public class ShoppingListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shopping_list, container, false);
         listView = (ListView) view.findViewById(R.id.ListView);
-        TotalPrice = (TextView) view.findViewById(R.id.TotalPriceView);
-        Prname = (EditText) view.findViewById(R.id.NameEditText);
-        Prprice = (EditText) view.findViewById(R.id.PriceEditText);
-        AddButton = (Button) view.findViewById(R.id.AddButton);
-        AddButton.setOnClickListener(new View.OnClickListener() {
+        totalPrice = (TextView) view.findViewById(R.id.TotalPriceView);
+        productName = (EditText) view.findViewById(R.id.NameEditText);
+        productPrice = (EditText) view.findViewById(R.id.PriceEditText);
+        addProductButton = (Button) view.findViewById(R.id.AddButton);
+        addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = "";
                 Double price = 0.0;
                 // secure code against invalid input
                 try{
-                    name = Prname.getText().toString();
-                    price = Double.valueOf(Prprice.getText().toString());
+                    name = productName.getText().toString();
+                    price = Double.valueOf(productPrice.getText().toString());
                 } catch(Exception e) {
                     Toast.makeText(getActivity(), "Nothing to add", Toast.LENGTH_SHORT).show();
                 }
@@ -73,23 +73,23 @@ public class ShoppingListFragment extends Fragment {
                     // refresh values in shopping list table
                     provideData();
                     // clear input fields
-                    Prname.setText("");
-                    Prprice.setText("");
+                    productName.setText("");
+                    productPrice.setText("");
     //              DBHelper = new UserDBHelper(getContext());
     //              db = DBHelper.getWritableDatabase();
     //
     //              String totalp = userDbHelper.calculateTotalPrice(db).total.getString;
-    //              TotalPrice.setText(totalP); //TODO Get the program to print the total price in the textView TotalPrice
+    //              totalPrice.setText(totalP); //TODO Get the program to print the total price in the textView TotalPrice
                     Toast.makeText(getActivity(), name + " added to shoppinglist", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        RemoveButton = (Button) view.findViewById(R.id.RemoveButton);
-        RemoveButton.setOnClickListener(new View.OnClickListener(){
+        removeProductButton = (Button) view.findViewById(R.id.RemoveButton);
+        removeProductButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v) {
-                String name = Prname.getText().toString();
+                String name = productName.getText().toString();
 
                 if((name.length() == 0)){
                     Toast.makeText(getActivity(), "Nothing to remove", Toast.LENGTH_SHORT).show();
@@ -104,8 +104,8 @@ public class ShoppingListFragment extends Fragment {
                         Toast.makeText(getActivity(), name + " is not removed from shoppinglist", Toast.LENGTH_SHORT).show();
                     }
 
-                Prname.setText("");
-                Prprice.setText("");
+                productName.setText("");
+                productPrice.setText("");
              //   userDbHelper.calculateTotalPrice();
             }}
 
