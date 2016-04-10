@@ -110,7 +110,7 @@ public class JoystickFragment extends Fragment implements JoystickView.OnJoystic
                 mHandler.postDelayed(this, 150); // Send data every 150ms
                 if (BasketDrawer.bluetoothService == null)
                     return;
-                if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_CONNECTED) {
+                if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_BT_CONNECTED) {
                    if (joystickReleased || (xValue == 0 && yValue == 0))
                        BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
                    else {

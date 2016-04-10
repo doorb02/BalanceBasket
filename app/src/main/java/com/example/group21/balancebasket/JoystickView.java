@@ -1,9 +1,5 @@
 package com.example.group21.balancebasket;
 
-/**
- * Created by Rens on 13-3-2016.
- */
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,10 +11,10 @@ import android.view.View;
 public class JoystickView extends View {
     private OnJoystickChangeListener listener;
 
-    final int holo_blue_dark = Color.parseColor("#A1887F");
-    final int buttonGray = Color.parseColor("#90A4AE");
+    final int darkTeal = Color.parseColor("#00796B");
+    final int buttonTeal = Color.parseColor("#009688");
 
-    private int buttonColor = buttonGray;
+    private int buttonColor = buttonTeal;
 
     private float x, y; // These are in the intern coordinates
     private double lastX, lastY; // These are in the external coordinates
@@ -60,7 +56,7 @@ public class JoystickView extends View {
 
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth(3);
-        p.setColor(buttonGray);
+        p.setColor(buttonTeal);
         canvas.drawCircle(centerX, centerY, joystickRadius, p);
         canvas.drawCircle(centerX, centerY, joystickRadius / 2, p);
 
@@ -92,15 +88,15 @@ public class JoystickView extends View {
         if (listener != null) {
             int actionMask = event.getActionMasked();
             if (actionMask == MotionEvent.ACTION_DOWN) {
-                buttonColor = holo_blue_dark;
+                buttonColor = darkTeal;
                 listener.setOnTouchListener(getXValue(), getYValue());
                 return true;
             } else if (actionMask == MotionEvent.ACTION_MOVE) {
-                buttonColor = holo_blue_dark;
+                buttonColor = darkTeal;
                 listener.setOnMovedListener(getXValue(), getYValue());
                 return true;
             } else if (actionMask == MotionEvent.ACTION_UP || actionMask == MotionEvent.ACTION_CANCEL) {
-                buttonColor = buttonGray;
+                buttonColor = buttonTeal;
                 x = centerX;
                 y = centerY;
                 lastX = 0;

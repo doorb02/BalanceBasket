@@ -1,17 +1,24 @@
 package com.example.group21.balancebasket;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 /**
@@ -27,12 +34,27 @@ public class ImuFragment extends Fragment {
     private Button mButton;
     public TextView mPitchView;
     public TextView mRollView;
+    public TextView inputview;
     public TableRow mTableRow;
 
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
     private int counter = 0;
     boolean buttonState;
+
+
+    public float pitchZero = 0;
+    public float rollZero = 0;
+    public String newPitch;
+    public String newRoll;
+
+
+    public  float  intpitchZero;
+    public  float  introllZero;
+    public float intPitch;
+    public float intRoll;
+
+    DecimalFormat d = (DecimalFormat) NumberFormat.getNumberInstance(Locale.ENGLISH);
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +107,7 @@ public class ImuFragment extends Fragment {
 
         mPitchView = (TextView) view.findViewById(R.id.textView1);
         mRollView = (TextView) view.findViewById(R.id.textView2);
+//        inputview = (TextView) view.findViewById(R.id.textView3);
         mButton = (Button) view.findViewById(R.id.activate_button);
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
@@ -99,6 +122,19 @@ public class ImuFragment extends Fragment {
 
         BasketDrawer.buttonState = false;
 
+
+
+        mButton.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN ) {
+                    pitchZero = Float.parseFloat(BasketDrawer.mSensorFusion.pitch);
+                    rollZero = Float.parseFloat(BasketDrawer.mSensorFusion.roll);
+                }
+                return false;
+            }
+        });
         return view;
     }
 
@@ -111,53 +147,65 @@ public class ImuFragment extends Fragment {
 
     @Override
     public void onResume() {
+        d.setRoundingMode(RoundingMode.HALF_UP);
+        d.setMaximumFractionDigits(3);
+        d.setMinimumFractionDigits(3);
         super.onResume();
         getActivity().bindService(new Intent(getActivity(), Bluetooth.class), BasketDrawer.blueConnection, Context.BIND_AUTO_CREATE);
         mRunnable = new Runnable() {
             @Override
             public void run() {
+
                 mHandler.postDelayed(this, 50); // Update IMU data every 50ms
                 if (BasketDrawer.mSensorFusion == null)
                     return;
-                mPitchView.setText(BasketDrawer.mSensorFusion.pitch);
-                mRollView.setText(BasketDrawer.mSensorFusion.roll);
-//                mCoefficient.setText(BasketDrawer.mSensorFusion.coefficient);
+
+        intPitch = Float.parseFloat(BasketDrawer.mSensorFusion.pitch) ;
+        intRoll =  Float.parseFloat(BasketDrawer.mSensorFusion.roll);
+        intpitchZero =intPitch - pitchZero;
+        introllZero =intRoll - rollZero;
+
+                newPitch = Float.toString(Float.parseFloat(d.format(intpitchZero)));
+                newRoll = Float.toString(Float.parseFloat(d.format(introllZero)));
+
+                mPitchView.setText(newPitch);
+                mRollView.setText(newRoll);
+
+                // TODO: Test BT input Read!
+//                Bluetooth.read();
+//                inputview.setText(Bluetooth.input);
 
                 counter++;
                 if (counter > 2) { // Only send data every 150ms time
                     counter = 0;
                     if (BasketDrawer.bluetoothService == null)
                         return;
-                    if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_CONNECTED){
+                    if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_BT_CONNECTED){
                         buttonState = mButton.isPressed();
                         BasketDrawer.buttonState = buttonState;
-
-//                        if (BasketDrawer.joystickReleased || getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) // Check if joystick is released or we are not in landscape mode
-//                            ViewPager.setPagingEnabled(!buttonState); // Set the ViewPager according to the button
-//                        else
-//                            CustomViewPager.setPagingEnabled(false);
 
                         if (BasketDrawer.joystickReleased) {
                             if (buttonState) {
 //                                lockRotation();
-                                BasketDrawer.bluetoothService.write(BasketDrawer.sendIMUValues + BasketDrawer.mSensorFusion.pitch + ',' + BasketDrawer.mSensorFusion.roll + ";");
+                                BasketDrawer.bluetoothService.write(BasketDrawer.sendIMUValues + newPitch + ',' + newRoll + ";");
+
                                 mButton.setText(R.string.sendingData);
+                                mButton.setBackgroundColor(Color.parseColor("#009688"));
                             } else {
 //                                unlockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
                                 mButton.setText(R.string.notSendingData);
+                                mButton.setBackgroundColor(Color.parseColor("#B2DFDB"));
                             }
                         }
                     } else {
                         mButton.setText(R.string.connectFirst);
-//                        if (BasketDrawer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT && BasketDrawer.joystickReleased)
-//                            CustomViewPager.setPagingEnabled(true);
+                        mButton.setBackgroundColor(Color.parseColor("#FF3D00"));
                     }
                 }
             }
         };
         mHandler.postDelayed(mRunnable, 50); // Update IMU data every 50ms
-
     }
 
     @Override
@@ -196,7 +244,6 @@ public class ImuFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

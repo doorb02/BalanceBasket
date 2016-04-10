@@ -95,6 +95,7 @@
     <string name="shopping_list_fragment_title">Shopping List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="action_follow_toggle">follow_toggle</string>
+    <string name="input">input</string>
 </resources>
 
 

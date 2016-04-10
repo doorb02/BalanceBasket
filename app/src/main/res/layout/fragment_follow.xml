@@ -4,26 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.example.group21.balancebasket.FollowFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:text="@string/hello_blank_fragment" />-->
     <ToggleButton
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:text="Follow"
         android:textOn=""
         android:textOff=""
         android:id="@+id/follow_button"
         android:layout_gravity="bottom"
         />
+        <!--android:background="@drawable/toggle_button_background"-->
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@drawable/ic_track_changes_24dp"
-        android:layout_gravity="center_horizontal|top" />
 
 </FrameLayout>

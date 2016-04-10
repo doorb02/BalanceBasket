@@ -14,14 +14,67 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="250dp"
         android:id="@+id/ListView"
-
-        >
-
-
-
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
     </ListView>
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/NameEditText"
+        android:hint="Name"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/TotalPriceView"
+        android:layout_alignStart="@+id/AddButton" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/PriceEditText"
+        android:layout_alignBottom="@+id/NameEditText"
+        android:layout_toEndOf="@+id/NameEditText"
+        android:layout_marginTop="20dp"
+        android:hint="Price" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/AddButton"
+        android:onClick="OnAddClicked"
+        android:layout_alignTop="@+id/RemoveButton"
+        android:layout_alignStart="@+id/ListView"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:onClick="OnRemoveClicked"
+        android:text="Remove"
+        android:id="@+id/RemoveButton"
+        android:layout_below="@+id/PriceEditText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/TotalPriceView"
+        android:password="true"
+        android:hint="Total Price"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ListView"
+        android:layout_alignEnd="@+id/PriceEditText"
+        android:layout_marginRight="10dp" />
 
 
 </RelativeLayout>

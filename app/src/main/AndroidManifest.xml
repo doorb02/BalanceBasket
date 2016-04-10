@@ -2,11 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.group21.balancebasket">
 
-
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-
-    <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -31,10 +28,6 @@
         <meta-data
             android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
             android:resource="@xml/device_filter" />
-        <!--
-             ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -44,18 +37,19 @@
         <activity
             android:name=".BasketDrawer"
             android:label="@string/title_activity_basket_drawer"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Connect_Screen" />
-        <activity android:name=".Welcome_Activity">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Welcome_Activity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Settings_Activity"
-            android:label="@string/title_activity_settings_"></activity>
+            android:label="@string/title_activity_settings_"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

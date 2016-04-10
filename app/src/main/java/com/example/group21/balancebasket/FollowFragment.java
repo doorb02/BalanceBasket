@@ -1,6 +1,7 @@
 package com.example.group21.balancebasket;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
@@ -26,16 +27,6 @@ public class FollowFragment extends Fragment {
     private int counter = 0;
     private boolean toggleButtonState;
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     public FollowFragment() {
@@ -46,16 +37,11 @@ public class FollowFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment FollowFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static FollowFragment newInstance(String param1, String param2) {
+    public static FollowFragment newInstance() {
         FollowFragment fragment = new FollowFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,26 +49,15 @@ public class FollowFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        context = getContext().getApplicationContext();
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // return inflater.inflate(R.layout.fragment_follow, container, false);
         View view = inflater.inflate(R.layout.fragment_follow, container, false);
 
         fButton = (ToggleButton)view.findViewById(R.id.follow_button);
-
-//        fButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//            }
-//        });
 
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() { // Hide the menu icon and tablerow if there is no build in gyroscope in the device
@@ -94,9 +69,6 @@ public class FollowFragment extends Fragment {
 //                    mTableRow.setVisibility(View.GONE); // If not then hide the tablerow
             }
         }, 100); // Wait 100ms before running the code
-
-        //BasketDrawer.buttonState = false;
-        //toggleButtonState = false;
 
         return view;
     }
@@ -116,38 +88,32 @@ public class FollowFragment extends Fragment {
             @Override
             public void run() {
                 mHandler.postDelayed(this, 50); // Update IMU data every 50ms
-//                if (BasketDrawer.mSensorFusion == null)
-//                    return;
 
                 counter++;
                 if (counter > 2) { // Only send data every 150ms time
                     counter = 0;
                     if (BasketDrawer.bluetoothService == null)
                         return;
-                    if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_CONNECTED){
+                    if (BasketDrawer.bluetoothService.getState() == Bluetooth.STATE_BT_CONNECTED){
                         toggleButtonState = fButton.isChecked();
-//                        BasketDrawer.buttonState = buttonState;
-
-//                        if (BasketDrawer.joystickReleased || getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) // Check if joystick is released or we are not in landscape mode
-//                            ViewPager.setPagingEnabled(!buttonState); // Set the ViewPager according to the button
-//                        else
-//                            CustomViewPager.setPagingEnabled(false);
-
                         if (BasketDrawer.joystickReleased) {
                             if (toggleButtonState) {
 //                                lockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendFollow + ";");
+                                BasketDrawer.follow = true;
                                 fButton.setText(R.string.followModeOn);
+                                fButton.setBackgroundColor(Color.parseColor("#009688"));
                             } else {
 //                                unlockRotation();
                                 BasketDrawer.bluetoothService.write(BasketDrawer.sendStop);
+                                BasketDrawer.follow = false;
                                 fButton.setText(R.string.followModeOff);
+                                fButton.setBackgroundColor(Color.parseColor("#B2DFDB"));
                             }
                         }
                     } else {
                         fButton.setText(R.string.connectFirst);
-//                        if (BasketDrawer.currentTabSelected == ViewPagerAdapter.IMU_FRAGMENT && BasketDrawer.joystickReleased)
-//                            CustomViewPager.setPagingEnabled(true);
+                        fButton.setBackgroundColor(Color.parseColor("#FF3D00"));
                     }
                 }
             }
